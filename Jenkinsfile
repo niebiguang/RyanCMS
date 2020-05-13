@@ -19,7 +19,7 @@ pipeline {
                 sh 'cd backend && npm run build'
             }
         }
-        stage('Deploy'){
+        stage('deploy'){
             steps {
                 sh 'ls'
             }
