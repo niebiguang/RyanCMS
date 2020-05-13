@@ -19,5 +19,8 @@ pipeline {
                 sh 'cd backend && npm run build'
             }
         }
+        stage('Deploy'){
+            
+        }
     }
 }
