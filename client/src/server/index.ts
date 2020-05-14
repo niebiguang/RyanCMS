@@ -1,11 +1,12 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 
-import lessParser from 'postcss-less';
+
 import axios from 'axios';
+import lessParser from 'postcss-less';
 require('css-modules-require-hook')({
 	generateScopedName: '[path][name]__[local]',
-	extensions: [ '.css', '.less', '.scss' ],
+	extensions: ['.css', '.less', '.scss'],
 	processorOpts: { parser: lessParser.parse }
 });
 import Router from 'koa-router';
@@ -46,7 +47,7 @@ router.all('/api/*', async (ctx: Koa.ParameterizedContext<{}, Router.IRouterCont
 	} catch (error) {
 		ctx.response.status = (error.response && error.response.data.status) || 500;
 		ctx.response.body = {
-			message:( error.response && error.response.data.message) || '网络错误'
+			message: (error.response && error.response.data.message) || '网络错误'
 		};
 		console.log(error);
 	}

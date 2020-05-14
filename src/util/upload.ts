@@ -53,7 +53,7 @@ export function getQiniu(name?: string) {
 }
 
 export function fsReadAsync(
-	path: string | number | Buffer | URL,
+	path: string | number | Buffer,
 	options?: {
 		encoding?: null;
 		flag?: string;

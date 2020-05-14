@@ -3,7 +3,10 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es7", "dom"],
+    "lib": [
+      "es7",
+      "dom"
+    ],
     "jsx": "react",
     "resolveJsonModule": true,
     "allowJs": true,
@@ -23,7 +26,9 @@
     "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "@ant-design/icons/lib/dist": ["src/config/icons.ts"],
+      "@ant-design/icons/lib/dist": [
+        "src/config/icons.ts"
+      ],
       "@/*": [
         "src/*"
       ]
@@ -32,7 +37,6 @@
   "include": [
     "src/**/**/*",
     "typings/*"
-
   ],
   "exclude": [
     "node_modules/**/*",

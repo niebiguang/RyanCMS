@@ -4,6 +4,13 @@ import { NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify
 import { ExceptionFilter } from './common/filters/exception.filter';
 import path from 'path';
 import bodyParser from 'body-parser';
+import lessParser from 'postcss-less';
+require('css-modules-require-hook')({
+  generateScopedName: '[path][name]__[local]',
+  extensions: ['.css', '.less', '.scss'],
+  processorOpts: { parser: lessParser.parse }
+});
+
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
   app.useGlobalFilters(new ExceptionFilter());
