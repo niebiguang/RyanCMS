@@ -7,6 +7,7 @@
     "server:build": "cross-env NODE_SCENE=local ts-node --project tsconfig.server.json -r tsconfig-paths/register src/server/index.ts",
     "server:product": "NODE_SCENE=server pm2 start  ts-node -- --type-check --project tsconfig.server.json -r tsconfig-paths/register src/server/index.ts --watch",
     "start": "nest start",
+    "start:dev": "nest start --watch",
     "build:prod": "cross-env NODE_CDN=public node scripts/build.js",
     "build": "node scripts/build.js"
   },
@@ -62,6 +63,7 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.2",
     "eslint-plugin-react": "7.11.1",
+    "fastify-static": "^2.7.0",
     "file-loader": "2.0.0",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
     "fs-extra": "7.0.0",

@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 export class CreateReplayDto extends Model {
   content: string = undefined;
   message_id: number = undefined;

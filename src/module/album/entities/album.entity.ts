@@ -9,7 +9,7 @@ import {
 	OneToMany,
 	ManyToOne
 } from 'typeorm';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { UserEntity } from '../../user/entities/user.entity';
 import { PhototEntity } from './photo.entity';
 import { CreateAlbumeDto } from '../form/create_album.dto';
@@ -150,7 +150,7 @@ export class AlbumEntity extends BaseEntity {
 				deleted_at: 0,
 				user_id: userId
 			},
-			relations: [ 'photos' ]
+			relations: ['photos']
 		});
 
 		if (!album) {
@@ -170,7 +170,7 @@ export class AlbumEntity extends BaseEntity {
 		if (_.isInteger(secret)) {
 			condition.secret = secret;
 		}
-		const relations = needRelations ? [ 'photos' ] : [];
+		const relations = needRelations ? ['photos'] : [];
 		if (userId) {
 			condition.user_id = userId;
 		}

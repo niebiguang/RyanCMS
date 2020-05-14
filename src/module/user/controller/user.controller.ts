@@ -2,16 +2,16 @@ import { Controller, Get, Post, Body, Query, Next, Headers, UseGuards } from '@n
 import { UserService } from '../service/user.service';
 import { RegisterDto } from '../form/register.dto';
 import { LoginDto } from '../form/login.dto';
-import { USER_RANK } from '../../common/constant/User';
-import { UserGuard } from '../../common/guards/user.guard';
-import { Auth } from '../../common/interface/Auth';
+import { USER_RANK } from '../../../common/constant/User';
+import { UserGuard } from '../../../common/guards/user.guard';
+import { Auth } from '../../../common/interface/Auth';
 import { UpdateUserDto } from '../form/updateUser.dto';
-import { SuccessResponse } from '../../common/filters/successResponse';
+import { SuccessResponse } from '../../../common/filters/successResponse';
 import { UpdateThemeDto } from '../form/updateTheme.dto';
 @Controller('user/user')
 @UseGuards(UserGuard)
 export class UserController {
-	constructor(private readonly userService: UserService) {}
+	constructor(private readonly userService: UserService) { }
 
 	@UseGuards(UserGuard)
 	@Post('/update')

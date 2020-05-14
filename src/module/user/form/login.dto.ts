@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class LoginDto extends Model {
   phone: string = undefined;

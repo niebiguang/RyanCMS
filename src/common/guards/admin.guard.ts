@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 import { ADMIN_RANK } from '../constant/User';
 import { Auth } from '../interface/Auth';
 

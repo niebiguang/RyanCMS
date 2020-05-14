@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class CreateNoticeDto extends Model {
 	title: string = undefined;
@@ -20,6 +20,6 @@ export class CreateNoticeDto extends Model {
 	}
 
 	rules() {
-		return [ [ [ 'title', 'content', 'type' ], 'required' ] ];
+		return [[['title', 'content', 'type'], 'required']];
 	}
 }

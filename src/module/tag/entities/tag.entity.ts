@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { CreateTagDto } from '../form/create_tag.dto';
 import { UpdateTagDto } from '../form/update_tag.dto';
 import { ArticleEntity } from '../../article/entities/article.entity';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 @Entity('tag')
 export class TagEntity extends BaseEntity {
 	@PrimaryGeneratedColumn() tag_id: number;
@@ -121,7 +121,7 @@ export class TagEntity extends BaseEntity {
 				deleted_at: 0,
 				user_id: userId
 			},
-			relations: [ 'articles' ]
+			relations: ['articles']
 		});
 
 		if (!tag) {
@@ -153,7 +153,7 @@ export class TagEntity extends BaseEntity {
 				deleted_at: 0,
 				user_id: userId
 			},
-			relations: [ 'articles' ],
+			relations: ['articles'],
 			skip: (page - 1) * size,
 			take: size,
 			order: {

@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdatePhotoDto extends Model {
 	photo_id: number = undefined;
@@ -17,6 +17,6 @@ export class UpdatePhotoDto extends Model {
 	}
 
 	rules() {
-		return [ [ [ 'name' ], 'string' ], [ [ 'photo_id' ], 'number' ] ];
+		return [[['name'], 'string'], [['photo_id'], 'number']];
 	}
 }

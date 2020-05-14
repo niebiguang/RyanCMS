@@ -10,10 +10,10 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { CommentService } from '../service/comment.service';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 @Controller('message/visitor')
 export class VisitorController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) { }
 
   @Get('list')
   getList(

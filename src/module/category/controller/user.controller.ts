@@ -9,16 +9,16 @@ import {
   Body,
 } from '@nestjs/common';
 import { CategoryService } from '../service/category.service';
-import { UserGuard } from '../../common/guards/user.guard';
-import { Auth } from '../../common/interface/Auth';
-import { SuccessResponse } from '../../common/filters/successResponse';
+import { UserGuard } from '../../../common/guards/user.guard';
+import { Auth } from '../../../common/interface/Auth';
+import { SuccessResponse } from '../../../common/filters/successResponse';
 import { UpdateCategoryDto } from '../form/update_category.dto';
 import { CreateCategoryDto } from '../form/create_category.dto';
 
 @Controller('category/user')
 @UseGuards(UserGuard)
 export class UserController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly categoryService: CategoryService) { }
 
   @Post('/create-category')
   async createCategory(

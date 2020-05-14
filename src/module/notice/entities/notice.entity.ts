@@ -12,9 +12,9 @@ import {
 } from 'typeorm';
 
 import dayjs from 'dayjs';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { CreateNoticeDto } from '../form/create_notice.dto';
-import { USER_RANK, ADMIN_RANK } from '../../common/constant/User';
+import { USER_RANK, ADMIN_RANK } from '../../../common/constant/User';
 import { NoticeReadEntity } from './notice_read.entity';
 import { UserEntity } from '../../user/entities/user.entity';
 @Entity('notice')

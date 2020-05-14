@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdateCategoryDto extends Model {
   category_id: number = undefined;

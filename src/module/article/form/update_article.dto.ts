@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdateArticleDto extends Model {
 	article_id: number = undefined;
@@ -31,10 +31,10 @@ export class UpdateArticleDto extends Model {
 
 	rules() {
 		return [
-			[ [ 'article_id' ], 'required' ],
-			[ [ 'title', 'content', 'summary', 'picture' ], 'selectable', 'string' ],
-			[ [ 'secret', 'level' ], 'selectable', 'number' ],
-			[ [ 'tags' ], 'selectable', 'array' ]
+			[['article_id'], 'required'],
+			[['title', 'content', 'summary', 'picture'], 'selectable', 'string'],
+			[['secret', 'level'], 'selectable', 'number'],
+			[['tags'], 'selectable', 'array']
 		];
 	}
 }

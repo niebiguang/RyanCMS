@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class CreatePhotosDto extends Model {
 	album_name: string = undefined;
@@ -18,9 +18,9 @@ export class CreatePhotosDto extends Model {
 
 	rules() {
 		return [
-			[ [ 'album_name' ], 'string' ],
+			[['album_name'], 'string'],
 			[
-				[ 'photos' ],
+				['photos'],
 				() => {
 					if (!this.photos.every((url) => _.isString(url) && !!url)) {
 						return '格式错误';

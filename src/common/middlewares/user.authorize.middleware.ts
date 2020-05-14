@@ -2,7 +2,7 @@ import {
   Injectable,
   NestMiddleware,
 } from '@nestjs/common';
-import { UserEntity } from '../../user/entities/user.entity';
+import { UserEntity } from '../../module/user/entities/user.entity';
 
 
 @Injectable()

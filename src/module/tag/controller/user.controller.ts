@@ -10,14 +10,14 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { TagService } from '../service/tag.service';
-import { UserGuard } from '../../common/guards/user.guard';
+import { UserGuard } from '../../../common/guards/user.guard';
 import { CreateTagDto } from '../form/create_tag.dto';
-import { Auth } from '../../common/interface/Auth';
+import { Auth } from '../../../common/interface/Auth';
 import { UpdateTagDto } from '../form/update_tag.dto';
-import { SuccessResponse } from '../../common/filters/successResponse';
+import { SuccessResponse } from '../../../common/filters/successResponse';
 @Controller('tag/user')
 export class UserController {
-  constructor(private readonly tagService: TagService) {}
+  constructor(private readonly tagService: TagService) { }
 
   @UseGuards(UserGuard)
   @Post('/create-tag')

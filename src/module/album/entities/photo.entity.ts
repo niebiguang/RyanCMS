@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, getConne
 import { AlbumEntity } from './album.entity';
 import { CreatePhotosDto } from '../form/create_photos.dto';
 import dayjs from 'dayjs';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { UpdatePhotoDto } from '../form/update_photo.dto';
 @Entity('photo')
 export class PhototEntity extends BaseEntity {

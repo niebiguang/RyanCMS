@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 
 import dayjs from 'dayjs';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { ReplayEntity } from './replace.entity';
 import { CreateMessageDto } from '../form/create_message.dto';
 import { MessageEntity } from './message.entity';

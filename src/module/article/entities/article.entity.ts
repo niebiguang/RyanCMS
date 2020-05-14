@@ -16,7 +16,7 @@ import {
 import dayjs from 'dayjs';
 import { ArticleContentEntity } from './article_content.entity';
 import { CreateArticleDto } from '../form/create_article.dto';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { TagEntity } from '../../tag/entities/tag.entity';
 import { UpdateArticleDto } from '../form/update_article.dto';
 import { CategoryEntity } from '../../category/entities/category.entity';
@@ -286,7 +286,7 @@ export class ArticleEntity extends BaseEntity {
 		}
 		const article = await this.findOne({
 			where: condition,
-			relations: [ 'content', 'tags' ]
+			relations: ['content', 'tags']
 		});
 		if (!article) {
 			throw new UserError('文章不存在');
@@ -369,7 +369,7 @@ export class ArticleEntity extends BaseEntity {
 			order: {
 				article_id: 'DESC'
 			},
-			relations: [ 'tags', 'category' ]
+			relations: ['tags', 'category']
 		});
 		return {
 			list: result[0],

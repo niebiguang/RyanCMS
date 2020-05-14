@@ -1,4 +1,4 @@
-import { UserError } from '../module/common/filters/userError';
+import { UserError } from '../common/filters/userError';
 import qiniu from 'qiniu';
 import fs from 'fs';
 import TranformToReadStream from 'tranform-to-readstream';

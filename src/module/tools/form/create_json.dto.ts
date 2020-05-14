@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 export class CreateJsonDto extends Model {
   mod: string = undefined;
   name: string = undefined;

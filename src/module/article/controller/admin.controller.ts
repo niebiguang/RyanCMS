@@ -1,11 +1,11 @@
 import { Controller, Get, Query, Headers, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { ArticleService } from '../service/article.service';
-import { Auth } from '../../common/interface/Auth';
-import { AdminGuard } from '../../common/guards/admin.guard';
+import { Auth } from '../../../common/interface/Auth';
+import { AdminGuard } from '../../../common/guards/admin.guard';
 @Controller('article/admin')
 @UseGuards(AdminGuard)
 export class AdminController {
-	constructor(private readonly articleService: ArticleService) {}
+	constructor(private readonly articleService: ArticleService) { }
 
 	@Get('detail')
 	getArticle(@Query('title') title: string, @Query('article_id') articleId: number, @Headers('auth') auth: Auth) {

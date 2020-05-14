@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdateTagDto extends Model {
   tag_id: number = undefined;

@@ -10,11 +10,11 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { CategoryService } from '../service/category.service';
-import { UserGuard } from '../../common/guards/user.guard';
+import { UserGuard } from '../../../common/guards/user.guard';
 
 @Controller('category/visitor')
 export class UserController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(private readonly categoryService: CategoryService) { }
 
   @UseGuards(UserGuard)
   @Get('/list')

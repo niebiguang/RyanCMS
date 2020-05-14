@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { TagEntity } from '../entities/tag.entity';
 import { CreateTagDto } from '../form/create_tag.dto';
 import { UpdateTagDto } from '../form/update_tag.dto';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 @Injectable()
 export class TagService {
-	constructor() {}
+	constructor() { }
 
 	createTag(createTagDto: CreateTagDto, userId: number) {
 		if (/[\\\/]/.test(createTagDto.name)) {

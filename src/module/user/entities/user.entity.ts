@@ -16,7 +16,7 @@ import crypto from 'crypto';
 import dayjs from 'dayjs';
 import { UserPasswordEntity } from './user_password.entity';
 import { LoginDto } from '../form/login.dto';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { UpdateUserDto } from '../form/updateUser.dto';
 import _ from 'lodash';
 import { UserResumeEntity } from './user_resume.entity';

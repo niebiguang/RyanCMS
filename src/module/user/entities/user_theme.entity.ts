@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { UserEntity } from './user.entity';
 import { UpdateThemeDto } from '../form/updateTheme.dto';
 @Entity('user_theme')

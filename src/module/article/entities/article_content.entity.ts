@@ -7,7 +7,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { ArticleEntity } from './article.entity';
 @Entity('article_content')
 export class ArticleContentEntity extends BaseEntity {

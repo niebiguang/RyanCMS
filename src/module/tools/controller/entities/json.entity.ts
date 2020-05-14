@@ -5,7 +5,7 @@ import {
   BaseEntity,
 } from 'typeorm';
 
-import { UserError } from '../../../common/filters/userError';
+import { UserError } from '../../../../common/filters/userError';
 import dayjs = require('dayjs');
 @Entity('json')
 export class JsonEntity extends BaseEntity {
@@ -51,21 +51,21 @@ export class JsonEntity extends BaseEntity {
   }
 
   public static async getJsonList(page: number = 1, size: number = 1) {
-		const result = await this.findAndCount({
-			skip: (page - 1) * size,
-			take: size,
-			order: {
-				json_id: 'DESC'
-			},
-		});
-		return {
-			list: result[0],
-			count: result[1]
-		};
+    const result = await this.findAndCount({
+      skip: (page - 1) * size,
+      take: size,
+      order: {
+        json_id: 'DESC'
+      },
+    });
+    return {
+      list: result[0],
+      count: result[1]
+    };
   }
 
   public static async deleteJson(id: number) {
-	  return this.delete(id);
+    return this.delete(id);
   }
 
   public static async updateJson(id: number, content: string) {

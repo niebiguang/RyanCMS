@@ -1,18 +1,18 @@
 import { Controller, Get, Post, Body, Query, Next, Headers, UseGuards, Param, ParseIntPipe } from '@nestjs/common';
-import { UserGuard } from '../../common/guards/user.guard';
+import { UserGuard } from '../../../common/guards/user.guard';
 import { AlbumService } from '../service/album.service';
 import { CreateAlbumeDto } from '../form/create_album.dto';
-import { Auth } from '../../common/interface/Auth';
+import { Auth } from '../../../common/interface/Auth';
 import { UpdateAlbumDto } from '../form/update_album.dto';
-import { SuccessResponse } from '../../common/filters/successResponse';
+import { SuccessResponse } from '../../../common/filters/successResponse';
 import { CreatePhotosDto } from '../form/create_photos.dto';
 import { UpdatePhotoDto } from '../form/update_photo.dto';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import _ from 'lodash';
 @Controller('album/user')
 @UseGuards(UserGuard)
 export class UserController {
-	constructor(private readonly service: AlbumService) {}
+	constructor(private readonly service: AlbumService) { }
 
 	@Post('/create-album')
 	async createAlbum(@Body() createAlbumeDto: CreateAlbumeDto, @Headers('auth') auth: Auth) {

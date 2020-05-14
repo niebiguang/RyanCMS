@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 export class UpdateJsonDto extends Model {
   id: number = undefined;
   content: string = undefined;

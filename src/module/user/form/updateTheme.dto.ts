@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdateThemeDto extends Model {
 	music: string = undefined;
@@ -17,6 +17,6 @@ export class UpdateThemeDto extends Model {
 	}
 
 	rules() {
-		return [ [ [ 'color', 'music' ], 'selectable', 'string' ] ];
+		return [[['color', 'music'], 'selectable', 'string']];
 	}
 }

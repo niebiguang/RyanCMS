@@ -2,11 +2,11 @@ import { Controller, Get, Post, Body, Query, ParseIntPipe } from '@nestjs/common
 import { UserService } from '../service/user.service';
 import { RegisterDto } from '../form/register.dto';
 import { LoginDto } from '../form/login.dto';
-import { USER_RANK } from '../../common/constant/User';
-import { UserError } from '../../common/filters/userError';
+import { USER_RANK } from '../../../common/constant/User';
+import { UserError } from '../../../common/filters/userError';
 @Controller('user/visitor')
 export class VisitorController {
-	constructor(private readonly userService: UserService) {}
+	constructor(private readonly userService: UserService) { }
 
 	@Post('/register')
 	async register(@Body() registerDto: RegisterDto) {

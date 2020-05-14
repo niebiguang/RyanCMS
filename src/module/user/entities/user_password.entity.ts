@@ -7,7 +7,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { UserEntity } from './user.entity';
 
 @Entity('user_password')

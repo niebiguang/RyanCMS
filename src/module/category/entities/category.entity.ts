@@ -12,7 +12,7 @@ import {
 import dayjs from 'dayjs';
 import { CreateCategoryDto } from '../form/create_category.dto';
 import { UpdateCategoryDto } from '../form/update_category.dto';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { ArticleEntity } from '../../article/entities/article.entity';
 @Entity('category')
 export class CategoryEntity extends BaseEntity {
@@ -104,7 +104,7 @@ export class CategoryEntity extends BaseEntity {
 				deleted_at: 0,
 				user_id: userId
 			},
-			relations: [ 'articles' ]
+			relations: ['articles']
 		});
 
 		if (!category) {

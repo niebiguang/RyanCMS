@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class CreateAlbumeDto extends Model {
 	name: string = undefined;
@@ -20,6 +20,6 @@ export class CreateAlbumeDto extends Model {
 	}
 
 	rules() {
-		return [ [ [ 'name', 'desc', 'picture' ], 'string' ], [ [ 'secret' ], 'number' ] ];
+		return [[['name', 'desc', 'picture'], 'string'], [['secret'], 'number']];
 	}
 }

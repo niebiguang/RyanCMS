@@ -1,13 +1,13 @@
 import { Controller, Post, Body, Headers, Get, Query, UseGuards } from '@nestjs/common';
 import { NoticeService } from '../service/notice.service';
 import { CreateNoticeDto } from '../form/create_notice.dto';
-import { Auth } from '../../common/interface/Auth';
-import { ADMIN_RANK, USER_RANK } from '../../common/constant/User';
-import { AdminGuard } from '../../common/guards/admin.guard';
+import { Auth } from '../../../common/interface/Auth';
+import { ADMIN_RANK, USER_RANK } from '../../../common/constant/User';
+import { AdminGuard } from '../../../common/guards/admin.guard';
 @Controller('notice/admin')
 @UseGuards(AdminGuard)
 export class AdminController {
-	constructor(private readonly service: NoticeService) {}
+	constructor(private readonly service: NoticeService) { }
 
 	@Post('/create-admin-notice')
 	createAdminNoticeDto(@Body() createNoticeDto: CreateNoticeDto, @Headers('auth') auth: Auth) {

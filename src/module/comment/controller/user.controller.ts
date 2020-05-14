@@ -10,14 +10,14 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { CommentService } from '../service/comment.service';
-import { UserGuard } from '../../common/guards/user.guard';
+import { UserGuard } from '../../../common/guards/user.guard';
 import { CreateMessageDto } from '../form/create_message.dto';
-import { Auth } from '../../common/interface/Auth';
+import { Auth } from '../../../common/interface/Auth';
 import { CreateReplayDto } from '../form/create_replay.dto';
-import { SuccessResponse } from '../../common/filters/successResponse';
+import { SuccessResponse } from '../../../common/filters/successResponse';
 @Controller('comment/user')
 export class UserController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) { }
 
   @UseGuards(UserGuard)
   @Post('/create-message')

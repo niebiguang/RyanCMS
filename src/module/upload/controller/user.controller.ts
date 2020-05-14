@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, UseGuards, HttpService, Query } from '@nestjs/common';
-import { UserGuard } from '../../common/guards/user.guard';
+import { UserGuard } from '../../../common/guards/user.guard';
 import { UploadService } from '../service/upload.service';
 import { getQiniu } from '../../../util/upload';
 @Controller('upload/user')

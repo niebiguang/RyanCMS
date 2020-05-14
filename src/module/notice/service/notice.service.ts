@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { NoticeEntity } from '../entities/notice.entity';
 import { CreateNoticeDto } from '../form/create_notice.dto';
-import { SuccessResponse } from '../../common/filters/successResponse';
+import { SuccessResponse } from '../../../common/filters/successResponse';
 @Injectable()
 export class NoticeService {
-	constructor() {}
+	constructor() { }
 
 	createNotice(createNoticeDto: CreateNoticeDto, rank: number, userId: number) {
 		return NoticeEntity.createNotice(createNoticeDto, rank, userId);

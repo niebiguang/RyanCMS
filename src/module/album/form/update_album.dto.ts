@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdateAlbumDto extends Model {
 	album_id: number = undefined;
@@ -23,6 +23,6 @@ export class UpdateAlbumDto extends Model {
 	}
 
 	rules() {
-		return [ [ [ 'name', 'picture', 'desc' ], 'selectable', 'string' ], [ [ 'secret' ], 'selectable', 'number' ] ];
+		return [[['name', 'picture', 'desc'], 'selectable', 'string'], [['secret'], 'selectable', 'number']];
 	}
 }

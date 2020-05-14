@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 import _ from 'lodash';
 export class UpdateUserDto extends Model {
 	nickname: string = undefined;
@@ -34,6 +34,6 @@ export class UpdateUserDto extends Model {
 	}
 
 	rules() {
-		return [ [ [ 'phone' ], 'phone' ], [ [ 'nickname' ], 'required' ] ];
+		return [[['phone'], 'phone'], [['nickname'], 'required']];
 	}
 }

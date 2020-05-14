@@ -6,15 +6,29 @@ import { ArticleModule } from './module/article/article.module';
 import { CategoryModule } from './module/category/category.module';
 import { UploadModule } from './module/upload/upload.module';
 import { CommentModule } from './module/comment/comment.module';
-import { CommonModule } from './module/common/common.module';
-import { UserAuthorizeMiddleware } from './module/common/middlewares/user.authorize.middleware';
+import { CommonModule } from './common/common.module';
+import { UserAuthorizeMiddleware } from './common/middlewares/user.authorize.middleware';
 import { AlbumModule } from './module/album/album.module';
 import { NoticeModule } from './module/notice/notice.module';
 import { MapModule } from './module/map/map.module';
 import { ToolsModule } from './module/tools/index.module';
+import { AppController } from './app.controller';
 
 const file = process.cwd() + '/config/ormconfig.json';
-const ormConfig = require(file);
+const ormConfig = {
+	"type": "mysql",
+	"host": process.env.MAIN_SERVER,
+	"port": 3306,
+	"username": process.env.MYSQL_USER_NAME,
+	"password": process.env.MYSQL_PASSWORD,
+	"database": "oma",
+	"entities": [
+		"**/**.entity{.js, .ts}"
+	],
+	"synchronize": false,
+	"cache": true,
+	"logging": false
+};
 
 @Module({
 	imports: [
@@ -30,7 +44,8 @@ const ormConfig = require(file);
 		MapModule,
 		CommentModule,
 		ToolsModule
-	]
+	],
+	controllers: [AppController],
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {

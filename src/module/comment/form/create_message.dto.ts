@@ -1,4 +1,4 @@
-import { Model } from '../../common/model';
+import { Model } from '../../../common/model';
 export class CreateMessageDto extends Model {
   content: string = undefined;
   comment_id?: number = undefined;

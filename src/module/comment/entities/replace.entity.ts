@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import dayjs from 'dayjs';
-import { UserError } from '../../common/filters/userError';
+import { UserError } from '../../../common/filters/userError';
 import { UserEntity } from '../../user/entities/user.entity';
 import { MessageEntity } from './message.entity';
 import { CreateReplayDto } from '../form/create_replay.dto';
