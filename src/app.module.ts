@@ -8,6 +8,7 @@ import { UploadModule } from './module/upload/upload.module';
 import { CommentModule } from './module/comment/comment.module';
 import { CommonModule } from './common/common.module';
 import { UserAuthorizeMiddleware } from './common/middlewares/user.authorize.middleware';
+import { RenderMiddleware } from './common/middlewares/render.middleware';
 import { AlbumModule } from './module/album/album.module';
 import { NoticeModule } from './module/notice/notice.module';
 import { MapModule } from './module/map/map.module';
@@ -49,6 +50,7 @@ const ormConfig = {
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(RenderMiddleware).forRoutes('');
 		consumer.apply(UserAuthorizeMiddleware).forRoutes('');
 	}
 }

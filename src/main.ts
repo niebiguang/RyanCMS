@@ -5,6 +5,8 @@ import { ExceptionFilter } from './common/filters/exception.filter';
 import path from 'path';
 import bodyParser from 'body-parser';
 import lessParser from 'postcss-less';
+import { Response } from 'express';
+import { renderFullPage } from './common/renderFullPage';
 require('css-modules-require-hook')({
   generateScopedName: '[path][name]__[local]',
   extensions: ['.css', '.less', '.scss'],
@@ -17,6 +19,14 @@ async function bootstrap() {
   app.useStaticAssets({
     root: path.join(__dirname, '..', 'public')
   });
+  app.use(async (req, res: Response, next) => {
+    const acceptHost = req.header['accept-host'];
+    const renderPage = await renderFullPage(req.url as string, acceptHost);
+    if (renderPage) {
+      return res.end(renderPage);
+    }
+    next()
+  })
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   await app.listen(8080, () => {
