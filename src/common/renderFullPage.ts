@@ -36,18 +36,23 @@ export const renderFullPage = async (url: string, domain: string) => {
       if (typeof DomainRouter.initServerData === 'function') {
         serverData = await DomainRouter.initServerData(url, domain);
       }
+    } else {
+      return null;
     }
 
     const store = createStore(model, serverData.props);
     let component = SSR(url, store) as any;
     let html = ReactDOMServer.renderToString(component);
-
+    console.log('初始化props文件');
     // 初始化props文件
-    const jsFecth = axios.post(API_HOST + '/upload/user/upload-qiniu-file', {
-      data: `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}`,
-      name: `init_state_${new Date().getTime()}.js`,
-    });
-
+    const jsFecth = axios.post(
+      'http://localhost:8080/upload/user/upload-qiniu-file',
+      {
+        data: `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}`,
+        name: `init_state_${new Date().getTime()}.js`,
+      },
+    );
+    console.log('初始化css文件');
     // 初始化css文件
     let cssFetch: any = null;
     const blogger = serverData.props.bloggers && serverData.props.bloggers[0];
@@ -56,10 +61,13 @@ export const renderFullPage = async (url: string, domain: string) => {
       styleText = model.themeModel.getReplaceCssText([
         { name: 'primary', color: serverData.props.bloggers![0].theme.color },
       ]);
-      cssFetch = axios.post(API_HOST + '/upload/user/upload-qiniu-file', {
-        data: styleText,
-        name: `init_thtme_${new Date().getTime()}.css`,
-      });
+      cssFetch = axios.post(
+        'http://localhost:8080/upload/user/upload-qiniu-file',
+        {
+          data: styleText,
+          name: `init_thtme_${new Date().getTime()}.css`,
+        },
+      );
     }
 
     const [jsResData, cssResData] = await Promise.all(
@@ -79,6 +87,8 @@ export const renderFullPage = async (url: string, domain: string) => {
         '$1' + decodeURIComponent(serverData.title) + '$3',
       );
     // CACHE_ROUTE_MAP[cacheUrl] = renderHtml;
+    console.log('renderHtml');
+    console.log(renderHtml);
     return renderHtml;
   } catch (error) {
     // console.log(error);

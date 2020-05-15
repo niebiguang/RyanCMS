@@ -1,5 +1,5 @@
 import { User as IUer, Resume } from '../../interface/user.interface';
-import { API } from './../API';
+import { request } from './../axios.config';
 
 export default class Visitor {
   static register(
@@ -7,31 +7,35 @@ export default class Visitor {
     phone: string,
     password: string,
   ): Promise<IUer> {
-    return API.post('/user/visitor/register', { nickname, phone, password });
+    return request.post('/user/visitor/register', {
+      nickname,
+      phone,
+      password,
+    });
   }
 
   static login(phone: string, password: string): Promise<IUer> {
-    return API.post('/user/visitor/login', {
+    return request.post('/user/visitor/login', {
       phone,
       password,
     });
   }
 
   static getDomainList(): Promise<IUer[]> {
-    return API.get('/domain-list');
+    return request.get('/domain-list');
   }
 
   static getBaseUser(params: {
     nickname?: string;
     domain?: string;
   }): Promise<IUer> {
-    return API.get('/user/visitor/base_info', {
+    return request.get('/user/visitor/base_info', {
       params,
     });
   }
 
   static getResume(userId: number): Promise<Resume> {
-    return API.get('/user/visitor/resume', {
+    return request.get('/user/visitor/resume', {
       params: {
         user_id: userId,
       },

@@ -27,8 +27,9 @@ async function bootstrap() {
     root: path.join(__dirname, '..', 'public'),
   });
   app.use(async (req, res: Response, next) => {
-    const acceptHost = req.header['accept-host'];
-    const renderPage = await renderFullPage(req.url as string, acceptHost);
+    // const acceptHost = req.headers['accept-host'];
+    console.log(req.url);
+    const renderPage = await renderFullPage(req.url as string, '');
     if (renderPage) {
       return res.end(renderPage);
     }

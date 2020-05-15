@@ -1,4 +1,4 @@
-import { API } from './../API';
+import { request } from './../axios.config';
 import { CategoryResponse } from '.';
 interface UpdateCategory {
   category_id: number;
@@ -8,7 +8,7 @@ interface UpdateCategory {
 }
 export default class User {
   static getList(page: number, size: number): Promise<CategoryResponse> {
-    return API.get('/category/user/list', {
+    return request.get('/category/user/list', {
       params: {
         page,
         size,
@@ -17,7 +17,7 @@ export default class User {
   }
 
   static createCategory(name: string, picture: string, desc: string) {
-    return API.post('/category/user/create-category', {
+    return request.post('/category/user/create-category', {
       name,
       picture,
       desc,
@@ -25,7 +25,7 @@ export default class User {
   }
 
   static deleteCategory(categoryId: number) {
-    return API.get('/category/user/delete-category', {
+    return request.get('/category/user/delete-category', {
       params: {
         category_id: categoryId,
       },
@@ -33,6 +33,6 @@ export default class User {
   }
 
   static updateCategory(data: UpdateCategory) {
-    return API.post('/category/user/update-category', data);
+    return request.post('/category/user/update-category', data);
   }
 }

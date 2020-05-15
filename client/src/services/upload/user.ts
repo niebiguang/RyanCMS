@@ -1,4 +1,4 @@
-import { API } from './../API';
+import { request } from './../axios.config';
 import Axios from 'axios';
 import { QI_NIU_ADDRESS } from '../../config/constant';
 export interface QiNiuConfig {
@@ -11,7 +11,7 @@ interface QiNiuResponse {
 }
 export default class User {
   static getQiNiuConfig(): Promise<QiNiuConfig> {
-    return API.get('/upload/user/qiniu-token');
+    return request.get('/upload/user/qiniu-token');
   }
 
   static async uploadByQiniu(

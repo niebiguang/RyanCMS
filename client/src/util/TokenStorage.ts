@@ -7,7 +7,7 @@ export default class TokenStorage {
 
   static getToken() {
     // 服务端调用
-    return window.localStorage.getItem(TOKEN);
+    return window.localStorage.getItem(TOKEN) || '';
   }
 
   static clearToken() {

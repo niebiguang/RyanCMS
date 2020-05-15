@@ -1,4 +1,4 @@
-import { API } from './../API';
+import { request } from './../axios.config';
 import { CommentResponse } from '.';
 import { Comment } from '../../interface/comment.interface';
 
@@ -7,7 +7,7 @@ export default class Visitor {
     blogger_id?: number;
     article_id?: number;
   }): Promise<Comment> {
-    return API.get('/message/visitor/info', {
+    return request.get('/message/visitor/info', {
       params: data,
     });
   }
@@ -17,7 +17,7 @@ export default class Visitor {
     size: number,
     commentId: number,
   ): Promise<CommentResponse> {
-    return API.get('/message/visitor/list', {
+    return request.get('/message/visitor/list', {
       params: {
         page,
         size,

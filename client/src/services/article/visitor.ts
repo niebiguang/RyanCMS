@@ -1,11 +1,11 @@
 import { Article } from '../../interface/article.interface';
-import { API } from './../API';
+import { request } from './../axios.config';
 import { ListResponse } from '../../interface/response/list.response';
 import { GetArticle } from '.';
 
 export default class Visitor {
   static getArticle(data: GetArticle): Promise<Article> {
-    return API.get('/article/visitor/detail', {
+    return request.get('/article/visitor/detail', {
       params: data,
     });
   }
@@ -18,7 +18,7 @@ export default class Visitor {
     tagId?: number,
     order?: string,
   ): Promise<ListResponse<Article>> {
-    return API.get('/article/visitor/list', {
+    return request.get('/article/visitor/list', {
       params: {
         page,
         size,
@@ -36,7 +36,7 @@ export default class Visitor {
     size: number,
     userId: number,
   ): Promise<ListResponse<Article>> {
-    return API.get('/article/visitor/search', {
+    return request.get('/article/visitor/search', {
       params: {
         page,
         size,

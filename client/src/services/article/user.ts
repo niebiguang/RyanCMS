@@ -1,19 +1,19 @@
 import { Article } from '../../interface/article.interface';
-import { API } from './../API';
+import { request } from './../axios.config';
 import { ListResponse } from '../../interface/response/list.response';
 import { CreateArticle, UpdateArticle, GetArticle } from '.';
 
 export default class User {
   static createArticle(data: CreateArticle): Promise<Article> {
-    return API.post('/article/user/create-article', data);
+    return request.post('/article/user/create-article', data);
   }
 
   static updateArticle(data: UpdateArticle): Promise<Article> {
-    return API.post('/article/user/update-article', data);
+    return request.post('/article/user/update-article', data);
   }
 
   static deleteArticle(articleId: number) {
-    return API.get('/article/user/delete', {
+    return request.get('/article/user/delete', {
       params: {
         article_id: articleId,
       },
@@ -21,7 +21,7 @@ export default class User {
   }
 
   static getArticle(data: GetArticle): Promise<Article> {
-    return API.get('/article/user/detail', {
+    return request.get('/article/user/detail', {
       params: data,
     });
   }
@@ -33,7 +33,7 @@ export default class User {
     tagId?: number,
     order?: string,
   ): Promise<ListResponse<User>> {
-    return API.get('/article/user/list', {
+    return request.get('/article/user/list', {
       params: {
         page,
         size,
@@ -49,7 +49,7 @@ export default class User {
     page: number,
     size: number,
   ): Promise<ListResponse<User>> {
-    return API.get('/article/user/search', {
+    return request.get('/article/user/search', {
       params: {
         page,
         size,

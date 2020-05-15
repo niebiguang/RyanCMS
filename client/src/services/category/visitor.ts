@@ -1,4 +1,4 @@
-import { API } from './../API';
+import { request } from './../axios.config';
 import { CategoryResponse } from '.';
 
 export default class Visitor {
@@ -7,7 +7,7 @@ export default class Visitor {
     size: number,
     userId: number,
   ): Promise<CategoryResponse> {
-    return API.get('/category/visitor/list', {
+    return request.get('/category/visitor/list', {
       params: {
         page,
         size,

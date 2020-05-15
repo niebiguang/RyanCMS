@@ -1,4 +1,4 @@
-import { API } from './../API';
+import { request } from './../axios.config';
 import { TagResponse } from '.';
 import { Tag } from '../../interface/tag.interface';
 
@@ -8,7 +8,7 @@ export default class Visitor {
     size: number,
     userId: number,
   ): Promise<TagResponse> {
-    return API.get('/tag/visitor/list', {
+    return request.get('/tag/visitor/list', {
       params: {
         page,
         size,
@@ -18,7 +18,7 @@ export default class Visitor {
   }
 
   static getTag(userId: number, name: string): Promise<Tag> {
-    return API.get('/tag/visitor/info', {
+    return request.get('/tag/visitor/info', {
       params: {
         user_id: userId,
         name,

@@ -1,4 +1,4 @@
-import { API } from './../API';
+import { request } from './../axios.config';
 import { TagResponse } from '.';
 
 interface UpdateTag {
@@ -10,7 +10,7 @@ interface UpdateTag {
 
 export default class User {
   static createTag(name: string, picture: string, desc: string) {
-    return API.post('/tag/user/create-tag', {
+    return request.post('/tag/user/create-tag', {
       name,
       picture,
       desc,
@@ -18,11 +18,11 @@ export default class User {
   }
 
   static updateTag(data: UpdateTag) {
-    return API.post('/tag/user/update-tag', data);
+    return request.post('/tag/user/update-tag', data);
   }
 
   static deleteTag(tagId: number) {
-    return API.get('/tag/user/delete-tag', {
+    return request.get('/tag/user/delete-tag', {
       params: {
         tag_id: tagId,
       },
@@ -30,7 +30,7 @@ export default class User {
   }
 
   static getList(page: number, size: number): Promise<TagResponse> {
-    return API.get('/tag/user/list', {
+    return request.get('/tag/user/list', {
       params: {
         page,
         size,
