@@ -8,7 +8,7 @@
     "server:product": "NODE_SCENE=server pm2 start  ts-node -- --type-check --project tsconfig.server.json -r tsconfig-paths/register src/server/index.ts --watch",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nest start --watch",
-    "build:prod": "cross-env NODE_CDN=public node scripts/build.js",
+    "build:prod": "cd client&& node scripts/build.js",
     "build": "node dist/src/main.js",
     "copy": "copyfiles client/**/*.css client/**/*.scss dist/"
   },
