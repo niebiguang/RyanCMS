@@ -6,8 +6,10 @@ import BlogRouter from '../../client/src/controller/blog/router/BlogRouter';
 import { ServerData } from '../../client/src/interface/serverData.interface';
 import * as model from '../../client/src/model';
 import axios from 'axios';
-import { API_HOST } from '../../client/src/server/constant';
 import DomainRouter from '../../client/src/controller/blog/router/DomainRouter';
+import { axiosInstance } from '../../client/src/services/axios.config';
+axiosInstance.defaults.baseURL = 'http://localhost:8080';
+
 const themeJson = require('../../client/build/theme.json');
 model.themeModel.setThemeColorData(themeJson); // 初始化主题颜色
 const htmlTemplete = fs.readFileSync(
@@ -46,7 +48,7 @@ export const renderFullPage = async (url: string, domain: string) => {
     console.log('初始化props文件');
     // 初始化props文件
     const jsFecth = axios.post(
-      'http://localhost:8080/upload/user/upload-qiniu-file',
+      'http://www.maocanhua.cn/api/upload/user/upload-qiniu-file',
       {
         data: `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}`,
         name: `init_state_${new Date().getTime()}.js`,
@@ -57,12 +59,13 @@ export const renderFullPage = async (url: string, domain: string) => {
     let cssFetch: any = null;
     const blogger = serverData.props.bloggers && serverData.props.bloggers[0];
     let styleText = '';
+    console.log('blogger', blogger);
     if (blogger && blogger.theme.color) {
       styleText = model.themeModel.getReplaceCssText([
         { name: 'primary', color: serverData.props.bloggers![0].theme.color },
       ]);
       cssFetch = axios.post(
-        'http://localhost:8080/upload/user/upload-qiniu-file',
+        'http://www.maocanhua.cn/api/upload/user/upload-qiniu-file',
         {
           data: styleText,
           name: `init_thtme_${new Date().getTime()}.css`,
@@ -73,6 +76,7 @@ export const renderFullPage = async (url: string, domain: string) => {
     const [jsResData, cssResData] = await Promise.all(
       [jsFecth, cssFetch].filter(item => !!item),
     );
+    console.log(jsResData, cssResData);
     let initStateJs = `<script src="${jsResData.data}"></script>`;
     let initStateStyle = cssResData
       ? `<link rel="stylesheet" href="${cssResData.data}">`
@@ -91,7 +95,7 @@ export const renderFullPage = async (url: string, domain: string) => {
     console.log(renderHtml);
     return renderHtml;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return error.message;
   }
 };

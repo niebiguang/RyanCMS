@@ -15,42 +15,39 @@ import { MapModule } from './module/map/map.module';
 import { ToolsModule } from './module/tools/index.module';
 import { AppController } from './app.controller';
 
-const file = process.cwd() + '/config/ormconfig.json';
 const ormConfig = {
-	"type": "mysql",
-	"host": process.env.MAIN_SERVER,
-	"port": 3306,
-	"username": process.env.MYSQL_USER_NAME,
-	"password": process.env.MYSQL_PASSWORD,
-	"database": "oma",
-	"entities": [
-		"**/**.entity{.js, .ts}"
-	],
-	"synchronize": false,
-	"cache": true,
-	"logging": false
+  type: 'mysql',
+  host: process.env.MAIN_SERVER,
+  port: 3306,
+  username: process.env.MYSQL_USER_NAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: 'cms',
+  entities: ['**/**.entity{.ts,}'],
+  synchronize: false,
+  cache: true,
+  logging: false,
 };
 
 @Module({
-	imports: [
-		TypeOrmModule.forRoot(ormConfig as any),
-		CommonModule,
-		UserModule,
-		TagModule,
-		ArticleModule,
-		CategoryModule,
-		UploadModule,
-		AlbumModule,
-		NoticeModule,
-		MapModule,
-		CommentModule,
-		ToolsModule
-	],
-	controllers: [AppController],
+  imports: [
+    TypeOrmModule.forRoot(ormConfig as any),
+    CommonModule,
+    UserModule,
+    TagModule,
+    ArticleModule,
+    CategoryModule,
+    UploadModule,
+    AlbumModule,
+    NoticeModule,
+    MapModule,
+    CommentModule,
+    ToolsModule,
+  ],
+  controllers: [AppController],
 })
 export class AppModule {
-	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(RenderMiddleware).forRoutes('');
-		consumer.apply(UserAuthorizeMiddleware).forRoutes('');
-	}
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RenderMiddleware).forRoutes('');
+    consumer.apply(UserAuthorizeMiddleware).forRoutes('');
+  }
 }

@@ -23,9 +23,9 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   app.useGlobalFilters(new ExceptionFilter());
-  app.useStaticAssets({
-    root: path.join(__dirname, '..', 'public'),
-  });
+  // app.useStaticAssets({
+  //   root: path.join(__dirname, '..', 'public'),
+  // });
   app.use(async (req, res: Response, next) => {
     // const acceptHost = req.headers['accept-host'];
     console.log(req.url);
