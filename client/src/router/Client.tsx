@@ -1,15 +1,11 @@
 import React from 'react';
-import { Provider } from 'ryan-redux';
-import { store } from '../store';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { BaseRouter } from './BaseRouter';
+import Login from '../controller/common/page/Login/Login';
 
-export const HotApp = (
-	<Provider store={store}>
-		<BrowserRouter>
-			<Switch>
-				<Route component={BaseRouter} />
-			</Switch>
-		</BrowserRouter>
-	</Provider>
+export const HotApp = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route component={Login} />
+    </Switch>
+  </BrowserRouter>
 );

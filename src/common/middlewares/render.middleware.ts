@@ -8,8 +8,6 @@ export class RenderMiddleware implements NestMiddleware {
     const renderPage = await renderFullPage(req.url as string, '');
     if (renderPage) {
       res.contentType('text/html; charset=utf-8');
-      // console.log('res.header', typeof res.header());
-      // res.contentType('html');
       return res.end(renderPage);
     }
 
