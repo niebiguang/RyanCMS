@@ -7,7 +7,7 @@
     "server:build": "cross-env NODE_SCENE=local ts-node --project tsconfig.server.json -r tsconfig-paths/register src/server/index.ts",
     "server:product": "NODE_SCENE=server pm2 start  ts-node -- --type-check --project tsconfig.server.json -r tsconfig-paths/register src/server/index.ts --watch",
     "start": "nodemon",
-    "start:client": "cd client&&node scripts/start.js",
+    "start:client": "node scripts/start.js",
     "build:client": "cd client&& node scripts/build.js",
     "build": "node dist/src/main.js",
     "copy": "copyfiles client/**/*.css client/**/*.scss dist/"
@@ -35,7 +35,7 @@
     "@nestjs/typeorm": "^6.3.4",
     "@types/jsonwebtoken": "^8.3.0",
     "@types/marked": "^0.4.2",
-    "antd": "^3.12.3",
+    "antd": "^4.2.2",
     "antd-color-palette": "^0.0.3",
     "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
