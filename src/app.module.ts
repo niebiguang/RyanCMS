@@ -14,6 +14,7 @@ import { NoticeModule } from './module/notice/notice.module';
 import { MapModule } from './module/map/map.module';
 import { ToolsModule } from './module/tools/index.module';
 import { AppController } from './app.controller';
+import { StaticProxyMiddleware } from './common/middlewares/proxy.middleware';
 
 const ormConfig = {
   type: 'mysql',
@@ -48,6 +49,7 @@ const ormConfig = {
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(RenderMiddleware).forRoutes('');
+    consumer.apply(StaticProxyMiddleware).forRoutes('');
     consumer.apply(UserAuthorizeMiddleware).forRoutes('');
   }
 }

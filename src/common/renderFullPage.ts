@@ -12,13 +12,14 @@ axiosInstance.defaults.baseURL = 'http://localhost:8080';
 
 const themeJson = require('../../client/build/theme.json');
 model.themeModel.setThemeColorData(themeJson); // 初始化主题颜色
-const htmlTemplete = fs.readFileSync(
-  process.cwd() + '/client/build/index.html',
-  'utf-8',
-);
+
 let CACHE_ROUTE_MAP = {};
 
 export const renderFullPage = async (url: string, domain: string) => {
+  const { data: htmlTemplete } = await axios.get('/', {
+    baseURL: 'http://localhost:3000',
+  });
+  console.log('htmlTemplete', htmlTemplete);
   let cacheUrl = url;
   try {
     // 对路由进行缓存
@@ -39,7 +40,11 @@ export const renderFullPage = async (url: string, domain: string) => {
     let html = ReactDOMServer.renderToString(component);
     console.log('初始化props文件');
 
-    return html;
+    const renderHtml = htmlTemplete.replace(
+      /(\<div\s+id\="root"\>)(.|\n|\r)*(\<\/div\>)/i,
+      '$1' + html + '$3',
+    );
+    return renderHtml;
   } catch (error) {
     console.log(error);
     return error.message;
