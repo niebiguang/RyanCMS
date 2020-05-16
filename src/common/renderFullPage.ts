@@ -29,15 +29,7 @@ export const renderFullPage = async (url: string, domain: string) => {
     let serverData: ServerData = { title: 'RyanCMS 内容管理系统', props: {} };
 
     if (/^\/u\/.+/.test(url)) {
-      if (typeof BlogRouter.initServerData === 'function') {
-        serverData = await BlogRouter.initServerData(decodeURIComponent(url));
-      }
     } else if (/^\/domain\b/.test(url)) {
-      // 独立域名
-      url = url.replace(/^\/domain\b/, '');
-      if (typeof DomainRouter.initServerData === 'function') {
-        serverData = await DomainRouter.initServerData(url, domain);
-      }
     } else {
       return null;
     }
@@ -46,54 +38,8 @@ export const renderFullPage = async (url: string, domain: string) => {
     let component = SSR(url, store) as any;
     let html = ReactDOMServer.renderToString(component);
     console.log('初始化props文件');
-    // 初始化props文件
-    const jsFecth = axios.post(
-      'http://www.maocanhua.cn/api/upload/user/upload-qiniu-file',
-      {
-        data: `window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}`,
-        name: `init_state_${new Date().getTime()}.js`,
-      },
-    );
-    console.log('初始化css文件');
-    // 初始化css文件
-    let cssFetch: any = null;
-    const blogger = serverData.props.bloggers && serverData.props.bloggers[0];
-    let styleText = '';
-    console.log('blogger', blogger);
-    if (blogger && blogger.theme.color) {
-      styleText = model.themeModel.getReplaceCssText([
-        { name: 'primary', color: serverData.props.bloggers![0].theme.color },
-      ]);
-      cssFetch = axios.post(
-        'http://www.maocanhua.cn/api/upload/user/upload-qiniu-file',
-        {
-          data: styleText,
-          name: `init_thtme_${new Date().getTime()}.css`,
-        },
-      );
-    }
 
-    const [jsResData, cssResData] = await Promise.all(
-      [jsFecth, cssFetch].filter(item => !!item),
-    );
-    console.log(jsResData, cssResData);
-    let initStateJs = `<script src="${jsResData.data}"></script>`;
-    let initStateStyle = cssResData
-      ? `<link rel="stylesheet" href="${cssResData.data}">`
-      : '';
-    const renderHtml = htmlTemplete
-      .replace(
-        /(\<div\s+id\="root"\>)(.|\n|\r)*(\<\/div\>)/i,
-        '$1' + html + '$3' + initStateStyle + initStateJs,
-      )
-      .replace(
-        /(\<title\>)(.*)?(\<\/title\>)/,
-        '$1' + decodeURIComponent(serverData.title) + '$3',
-      );
-    // CACHE_ROUTE_MAP[cacheUrl] = renderHtml;
-    console.log('renderHtml');
-    console.log(renderHtml);
-    return renderHtml;
+    return html;
   } catch (error) {
     console.log(error);
     return error.message;
