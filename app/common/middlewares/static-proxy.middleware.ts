@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-const staticProxy = createProxyMiddleware('/static', {
+const staticProxy = createProxyMiddleware(['/static/**', '/*.json', '/*.js', '/*.css', '/*.map'], {
   target: 'http://localhost:3000',
   changeOrigin: true,
 });
