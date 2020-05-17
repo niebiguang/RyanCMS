@@ -6,7 +6,7 @@ export function Login() {
   return (
     <div className={styles['container']}>
       <div className={styles['box']}>
-        asdasdasd
+        12313123123123
       </div>
     </div>
   );

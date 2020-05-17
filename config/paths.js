@@ -76,7 +76,7 @@ module.exports = {
 	proxySetup: resolveApp('client/setupProxy.js'),
 	appNodeModules: resolveApp('node_modules'),
 	servedPath:
-		process.env.NODE_CDN === 'public' ? 'http://public.maocanhua.cn/' : ''
+		process.env.NODE_CDN === 'public' ? 'http://public.maocanhua.cn/' : '/'
 };
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
