@@ -1,12 +1,12 @@
 interface Window {
 	__INITIAL_STATE__?: {} | undefined | { [key: string]: any };
 	CSS_EXTRACT_COLOR_PLUGIN?:
-		| {
-				source: string;
-				fileName: string;
-				matchColors: string[];
-			}[]
-		| undefined;
+	| {
+		source: string;
+		fileName: string;
+		matchColors: string[];
+	}[]
+	| undefined;
 	_hmt: string[][];
 }
 
@@ -21,17 +21,17 @@ declare namespace NodeJS {
 			__INITIAL_STATE__?: {} | undefined | { [key: string]: any };
 		};
 		CSS_EXTRACT_COLOR_PLUGIN?:
-			| {
-					source: string;
-					fileName: string;
-					matchColors: string[];
-				}[]
-			| undefined;
+		| {
+			source: string;
+			fileName: string;
+			matchColors: string[];
+		}[]
+		| undefined;
 		Blob: {
 			readonly size: number;
 			readonly type: string;
 			slice(start?: number, end?: number, contentType?: string): Blob;
-			new (blobParts?: BlobPart[], options?: BlobPropertyBag): Blob;
+			new(blobParts?: BlobPart[], options?: BlobPropertyBag): Blob;
 		};
 	}
 }

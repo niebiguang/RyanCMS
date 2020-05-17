@@ -23,13 +23,10 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "./*"
+      "@app*": [
+        "app/*"
       ],
-      "@ant-design/icons/lib/dist": [
-        "client/config/icons.ts"
-      ],
-      "@/*": [
+      "@client*": [
         "client/*"
       ]
     }
@@ -38,7 +35,8 @@
     "src/**/*",
     "src/*",
     "client/**/*",
-    "client/*"
+    "client/*",
+    "typings/**/*"
   ],
   "exclude": [
     "node_modules",

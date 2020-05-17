@@ -5,7 +5,9 @@ import { LoginForm } from './components/LoginForm/LoginForm';
 export function Login() {
   return (
     <div className={styles['container']}>
-      <LoginForm />
+      <div className={styles['box']}>
+        asdasdasd
+      </div>
     </div>
   );
 }

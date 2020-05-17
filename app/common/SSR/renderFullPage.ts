@@ -5,7 +5,7 @@ export const renderFullPage = async (url: string, domain: string) => {
   const { data: htmlTemplete } = await axios.get('/', {
     baseURL: 'http://localhost:3000',
   });
-  const { SSR } = require('../../client/router/SSR');
+  const { SSR } = require('@client/router/SSR');
   let component = SSR(url);
 
   if (!component) {

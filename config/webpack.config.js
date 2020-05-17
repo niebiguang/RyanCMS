@@ -67,57 +67,67 @@ module.exports = function (webpackEnv) {
 
 	// common function to get style loaders
 	const getStyleLoaders = (cssOptions, preProcessor, preProcessorOptions) => {
-		const loaders = [
-			isEnvDevelopment && require.resolve('style-loader'),
-			isEnvProduction && {
-				loader: MiniCssExtractPlugin.loader,
-				options: Object.assign(
-					{
-						filename: '[name].css',
-						chunkFilename: '[id].css'
-					},
-					shouldUseRelativeAssetPaths
-						? {
-							publicPath: '../../'
-						}
-						: undefined
-				)
-			},
-			{
-				loader: require.resolve('css-loader'),
-				options: cssOptions
-			},
-			{
-				loader: CssColorExtractPlugin.loader,
-				options: {
-					...cssOptions,
-					colors: [...getColors('#067785'), '#fff']
-				}
-			},
-			{
-				// Options for PostCSS as we reference these options twice
-				// Adds vendor prefixing based on your specified browser support in
-				// package.json
-				loader: require.resolve('postcss-loader'),
-				options: {
-					// Necessary for external CSS imports to work
-					// https://github.com/facebook/create-react-app/issues/2677
-					ident: 'postcss',
-					plugins: () => [
-						require('postcss-flexbugs-fixes'),
-						require('postcss-preset-env')({
-							autoprefixer: {
-								remove: false,
-								flexbox: 'no-2009'
-							},
-							stage: 3
-						})
-					],
-					sourceMap: isEnvProduction && shouldUseSourceMap
-				}
+		const loaders = [{
+			loader: MiniCssExtractPlugin.loader,
+			options: Object.assign(
+				{
+					filename: '[name].css',
+					chunkFilename: '[id].css'
+				},
+				shouldUseRelativeAssetPaths
+					? {
+						publicPath: '../../'
+					}
+					: undefined
+			)
+		},
+		{
+			loader: require.resolve('css-loader'),
+			options: cssOptions
+		},
+		{
+			loader: CssColorExtractPlugin.loader,
+			options: {
+				...cssOptions,
+				colors: [...getColors('#067785'), '#fff']
 			}
+		},
+		{
+			// Options for PostCSS as we reference these options twice
+			// Adds vendor prefixing based on your specified browser support in
+			// package.json
+			loader: require.resolve('postcss-loader'),
+			options: {
+				// Necessary for external CSS imports to work
+				// https://github.com/facebook/create-react-app/issues/2677
+				ident: 'postcss',
+				plugins: () => [
+					require('postcss-flexbugs-fixes'),
+					require('postcss-preset-env')({
+						autoprefixer: {
+							remove: false,
+							flexbox: 'no-2009'
+						},
+						stage: 3
+					})
+				],
+				sourceMap: isEnvProduction && shouldUseSourceMap
+			}
+		}
 		].filter(Boolean);
 		if (preProcessor) {
+
+			if (preProcessor.indexOf('sass-loader') !== -1 && cssOptions.modules) {
+				loaders.push({
+					loader: require.resolve(CssColorExtractPlugin.loader),
+					options: {
+						modules: true,
+						localIdentName: '[local]-[hash:5]',
+						colors: ['#067785']
+					}
+				})
+			}
+
 			loaders.push({
 				loader: require.resolve(preProcessor),
 				options: {
@@ -148,10 +158,9 @@ module.exports = function (webpackEnv) {
 			// to bring better experience for Create React App users. You can replace
 			// the line below with these two lines if you prefer the stock client:
 			// require.resolve('webpack-dev-server/client') + '?/',
-			isEnvDevelopment && require.resolve('webpack/hot/dev-server'),
-			isEnvDevelopment && require.resolve('react-dev-utils/webpackHotDevClient'),
+			// isEnvDevelopment && require.resolve('webpack/hot/dev-server'),
+			// isEnvDevelopment && require.resolve('react-dev-utils/webpackHotDevClient'),
 			// Finally, this is your app's code:
-			require.resolve('antd/dist/antd.less'),
 			paths.appIndexJs
 			// We include the app code last so that if there is a runtime error during
 			// initialization, it doesn't blow up the WebpackDevServer client, and
@@ -432,17 +441,6 @@ module.exports = function (webpackEnv) {
 							// See https://github.com/webpack/webpack/issues/6571
 							sideEffects: true
 						},
-						// Adds support for CSS Modules (https://github.com/css-modules/css-modules)
-						// using the extension .module.css
-						{
-							test: cssModuleRegex,
-							use: getStyleLoaders({
-								importLoaders: 1,
-								sourceMap: isEnvProduction && shouldUseSourceMap,
-								modules: true,
-								getLocalIdent: getCSSModuleLocalIdent
-							})
-						},
 						// Opt-in support for SASS (using .scss or .sass extensions).
 						// By default we support SASS Modules with the
 						// extensions .module.scss or .module.sass
@@ -505,41 +503,18 @@ module.exports = function (webpackEnv) {
 						},
 						// Adds support for CSS Modules, but using SASS
 						// using the extension .module.scss or .module.sass
+
 						{
 							test: sassModuleRegex,
-							use: [
-								isEnvDevelopment && require.resolve('style-loader'),
-								isEnvProduction && {
-									loader: MiniCssExtractPlugin.loader,
-									options: Object.assign(
-										{},
-										shouldUseRelativeAssetPaths
-											? {
-												publicPath: '../../'
-											}
-											: undefined
-									)
-								},
-
+							use: getStyleLoaders(
 								{
-									loader: require.resolve('typings-for-css-modules-loader'),
-									options: {
-										modules: true,
-										localIdentName: '[path][name]__[local]',
-										sass: true
-									}
-								},
-								{
-									loader: require.resolve(CssColorExtractPlugin.loader),
-									options: {
-										modules: true,
-										localIdentName: '[path][name]__[local]',
-										colors: ['#067785']
-									}
+									importLoaders: 3,
+									sourceMap: isEnvProduction && shouldUseSourceMap,
+									modules: true,
+									localIdentName: '[path][name]__[local]'
 								},
 								'sass-loader'
-							].filter(Boolean),
-							sideEffects: true
+							),
 						},
 						// "file" loader makes sure those assets get served by WebpackDevServer.
 						// When you `import` an asset, you get its (virtual) filename.
@@ -565,7 +540,6 @@ module.exports = function (webpackEnv) {
 		},
 		plugins: [
 			new CssColorExtractPlugin({ fileName: 'theme', json: true }),
-			// Generates an `index.html` file with the <script> injected.
 			new HtmlWebpackPlugin(
 				Object.assign(
 					{},
@@ -626,7 +600,6 @@ module.exports = function (webpackEnv) {
 			// makes the discovery automatic so you don't have to restart.
 			// See https://github.com/facebook/create-react-app/issues/186
 			isEnvDevelopment && new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-			isEnvProduction &&
 			new MiniCssExtractPlugin({
 				// Options similar to the same options in webpackOptions.output
 				// both options are optional

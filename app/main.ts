@@ -10,7 +10,6 @@ import { AppModule } from './app.module';
 import { ExceptionFilter } from './common/filters/exception.filter';
 import path from 'path';
 import bodyParser from 'body-parser';
-import { renderFullPage } from './common/renderFullPage';
 import { watchClientReload } from './common/SSR/watchClientReload';
 import { isDevelopment } from './util/util';
 
@@ -19,18 +18,6 @@ async function bootstrap() {
   app.useGlobalFilters(new ExceptionFilter());
   // app.useStaticAssets({
   //   root: path.join(__dirname, '..', 'public'),
-  // });
-  // app.use(async (req, res, next) => {
-  //   // const acceptHost = req.headers['accept-host'];
-  //   console.log(req.url);
-  //   const renderPage = await renderFullPage(req.url as string, '');
-  //   if (renderPage) {
-  //     console.log('res.header', res.headers);
-  //     console.log('res.header', typeof res.header);
-  //     // res.contentType('html');
-  //     return (res.end(renderPage));
-  //   }
-  //   next();
   // });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
