@@ -15,9 +15,18 @@ import { ExceptionFilter } from './common/filters/exception.filter';
 import path from 'path';
 import bodyParser from 'body-parser';
 import { watchClientReload } from './common/SSR/watchClientReload';
-import { isDevelopment } from './util/util';
+import { isProduction } from './util/util';
+import { staticDir } from './common/constant/path';
+import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 
 async function bootstrap() {
+
+  if (isProduction()) {
+    awaitStaticReady()
+  } else {
+    watchClientReload()
+  }
+
   const app = await NestFactory.create(
     AppModule,
   );
@@ -25,13 +34,11 @@ async function bootstrap() {
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  app.use(ServerStatuc('build', {
+  app.use(ServerStatuc(staticDir, {
 
   }));
   await app.listen(8080, () => {
-    if (isDevelopment()) {
-      watchClientReload()
-    }
+
     console.log('服务器已开启: http:localhost:8080');
   });
 }
