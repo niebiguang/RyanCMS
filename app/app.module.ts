@@ -15,6 +15,7 @@ import { MapModule } from './module/map/map.module';
 import { ToolsModule } from './module/tools/index.module';
 import { AppController } from './app.controller';
 import { isDevelopment } from './util/util';
+import { WebpackMiddleware } from './common/middlewares/webpack.middleware';
 
 const ormConfig = {
   type: 'mysql',
@@ -48,6 +49,7 @@ const ormConfig = {
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(WebpackMiddleware).forRoutes('');
     consumer.apply(RenderMiddleware).forRoutes('');
     consumer.apply(UserAuthorizeMiddleware).forRoutes('');
   }

@@ -9,5 +9,5 @@
   "ignore": [
     "src/**/*.spec.ts"
   ],
-  "exec": "rimraf build && ts-node -r tsconfig-paths/register app/main.ts"
+  "exec": "ts-node -r tsconfig-paths/register app/main.ts"
 }

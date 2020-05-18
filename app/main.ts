@@ -4,27 +4,21 @@ require('css-modules-require-hook')({
   extensions: ['.css', '.less', '.scss'],
   processorOpts: { parser: lessParser.parse },
 });
-import {
-  NestFastifyApplication,
-  FastifyAdapter,
-} from '@nestjs/platform-fastify';
 import { NestFactory } from '@nestjs/core';
 import ServerStatuc from 'serve-static';
 import { AppModule } from './app.module';
 import { ExceptionFilter } from './common/filters/exception.filter';
-import path from 'path';
 import bodyParser from 'body-parser';
 import { isProduction } from './util/util';
 import { staticDir } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
-import { webpackDevServer } from './common/SSR/webpackDevServer';
 
 async function bootstrap() {
 
   if (isProduction()) {
     awaitStaticReady()
   } else {
-    webpackDevServer();
+
   }
 
   const app = await NestFactory.create(
