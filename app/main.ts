@@ -14,17 +14,17 @@ import { AppModule } from './app.module';
 import { ExceptionFilter } from './common/filters/exception.filter';
 import path from 'path';
 import bodyParser from 'body-parser';
-import { watchClientReload } from './common/SSR/watchClientReload';
 import { isProduction } from './util/util';
 import { staticDir } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
+import { webpackDevServer } from './common/SSR/webpackDevServer';
 
 async function bootstrap() {
 
   if (isProduction()) {
     awaitStaticReady()
   } else {
-    watchClientReload()
+    webpackDevServer();
   }
 
   const app = await NestFactory.create(
@@ -35,7 +35,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.use(ServerStatuc(staticDir, {
-
+    index: false,
   }));
   await app.listen(8080, () => {
 

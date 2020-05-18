@@ -1,8 +1,8 @@
 import { render } from 'react-dom';
-import { HotApp } from './router/Client';
+import { router } from './router';
 
 async function bootstrap() {
-  render(HotApp(), document.getElementById('root'));
+  render(router(), document.getElementById('root'));
 }
 
 bootstrap();
