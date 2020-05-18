@@ -17,8 +17,6 @@ async function bootstrap() {
 
   if (isProduction()) {
     awaitStaticReady()
-  } else {
-
   }
 
   const app = await NestFactory.create(
@@ -32,7 +30,6 @@ async function bootstrap() {
     index: false,
   }));
   await app.listen(8080, () => {
-
     console.log('服务器已开启: http:localhost:8080');
   });
 }

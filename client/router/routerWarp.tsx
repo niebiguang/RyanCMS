@@ -1,18 +1,23 @@
 import React from 'react';
 import { StaticRouter, BrowserRouter } from 'react-router-dom';
+import { StoreProvider } from '../modal';
 
 export function routerWarp(children: React.ReactNode) {
   return (url?: string) => {
     if (url) {
       return (
         <StaticRouter context={{}} location={url}>
-          {children}
+          <StoreProvider>
+            {children}
+          </StoreProvider>
         </StaticRouter>
       )
     } else {
       return (
         <BrowserRouter>
-          {children}
+          <StoreProvider>
+            {children}
+          </StoreProvider>
         </BrowserRouter>
       )
     }
