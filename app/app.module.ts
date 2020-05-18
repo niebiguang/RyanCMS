@@ -16,6 +16,7 @@ import { ToolsModule } from './module/tools/index.module';
 import { AppController } from './app.controller';
 import { StaticProxyMiddleware } from './common/middlewares/static-proxy.middleware';
 import { isDevelopment } from './util/util';
+import { WerbpackMiddleware } from './common/middlewares/webpack.middleware';
 
 const ormConfig = {
   type: 'mysql',
@@ -50,6 +51,7 @@ const ormConfig = {
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     if (isDevelopment()) {
+      consumer.apply(WerbpackMiddleware).forRoutes('');
       consumer.apply(StaticProxyMiddleware).forRoutes('');
     }
     consumer.apply(RenderMiddleware).forRoutes('');
