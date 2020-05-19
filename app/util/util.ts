@@ -9,3 +9,7 @@ export function isDevelopment() {
 export function isProduction() {
   return process.env.NODE_ENV === 'production';
 }
+
+export function depay(time: number) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}

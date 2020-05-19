@@ -1,30 +1,32 @@
 import ReactDOMServer from 'react-dom/server';
 import fs from 'fs-extra';
 import axios from 'axios';
-import { isProduction } from '../../util/util';
+import { isProduction, depay } from '../../util/util';
 
 async function getHtmlTemplete() {
   let htmlTemplete = '';
   return (async () => {
-    if (htmlTemplete) return htmlTemplete;
     if (isProduction()) {
+      if (htmlTemplete) return htmlTemplete;
       htmlTemplete = await fs.readFile('build/index.html', {
-        encoding: 'utf8'
-      })
+        encoding: 'utf8',
+      });
+      return htmlTemplete;
     } else {
+      // 开发环境不需要缓存
       const { data } = await axios.get('/index.html', {
         baseURL: 'http://localhost:8080',
       });
-      htmlTemplete = data;
+      return data;
     }
-    return htmlTemplete;
-  })()
+  })();
 }
 
 export const renderFullPage = async (url: string, domain: string) => {
   const { router } = require('@client/router');
   let component = router(url);
   if (!component) return null;
+  await depay(2000);
   let html = ReactDOMServer.renderToString(component);
   if (!html) return null;
   const htmlTemplete = await getHtmlTemplete();
@@ -34,6 +36,3 @@ export const renderFullPage = async (url: string, domain: string) => {
   );
   return renderHtml;
 };
-
-
-

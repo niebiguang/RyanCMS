@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
-import { useSelector } from '../../../modal';
+import React from 'react';
+// import { useSelector } from '../../../modal';
 
 export function Home() {
-  const { getUser } = useSelector('user');
+  // const { getUser } = useSelector('user');
 
-  useEffect(() => {
-    getUser()
-  }, [])
-  return <div>home</div>
+  // useEffect(() => {
+  //   console.log('useEffect');
+  // }, []);
+
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+  return <div>home</div>;
 }
