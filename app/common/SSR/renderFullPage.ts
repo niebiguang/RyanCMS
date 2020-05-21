@@ -2,8 +2,6 @@ import ReactDOMServer from 'react-dom/server';
 import fs from 'fs-extra';
 import axios from 'axios';
 import { isProduction } from '../../util/util';
-import { PromiseList } from '@/client/hooks/useSSRProps';
-import { clearModuleCache } from '@/app/common/SSR/clearModuleCache';
 
 async function getHtmlTemplete() {
   let htmlTemplete = '';
@@ -26,12 +24,12 @@ async function getHtmlTemplete() {
 
 export const renderFullPage = async (url: string, domain: string) => {
   const { router } = await import('@/client/router');
+  const { PromiseList } = await import('@/client/hooks/useSSRProps');
   let initComponent = router(url);
   if (!initComponent) return null;
   PromiseList.clear();
   ReactDOMServer.renderToStaticMarkup(initComponent);
   const store = await PromiseList.getData();
-
   const component = router(url, store);
   let html = ReactDOMServer.renderToString(component);
   if (!html) return null;
@@ -40,6 +38,5 @@ export const renderFullPage = async (url: string, domain: string) => {
     /(\<div\s+id\="root"\>)(.|\n|\r)*(\<\/div\>)/i,
     '$1' + html + '$3',
   );
-  clearModuleCache('client/router');
   return renderHtml;
 };

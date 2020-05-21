@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react';
 
 export type PromiseHandler<
   T extends any = { [key: string]: any }
-> = () => Promise<T>;
+  > = () => Promise<T>;
 export class PromiseList {
   static list: PromiseHandler[] = [];
 

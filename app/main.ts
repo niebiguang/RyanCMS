@@ -12,10 +12,13 @@ import bodyParser from 'body-parser';
 import { isProduction } from './util/util';
 import { staticDir } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
+import { watchClientReload } from '@/app/common/SSR/watchClientReload';
 
 async function bootstrap() {
   if (isProduction()) {
     awaitStaticReady();
+  } else {
+    watchClientReload();
   }
 
   const app = await NestFactory.create(AppModule);
