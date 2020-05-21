@@ -10,8 +10,12 @@ const compiler = webpack(config);
 export class WebpackMiddleware implements NestMiddleware {
   private webpackDev = webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    // logLevel: 'silent',
+    logLevel: "warn",
     index: false,
+    writeToDisk: true,
+    headers: {
+      "Cache-Control": "no-cache"
+    }
   });
   async use(req: Request, res: Response, next: NextFunction) {
     this.webpackDev(req, res, next);

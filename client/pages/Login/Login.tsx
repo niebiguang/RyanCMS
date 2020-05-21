@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export function Login() {
   return (
     <div className={styles['container']}>
-      <Link to="/hello">hello</Link>
+      <Link to="/hello">hell123o</Link>
       <div className={styles['box']}>asdaqweqwew</div>
     </div>
   );

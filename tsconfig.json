@@ -17,23 +17,26 @@
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "ESNext",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": ".",
     "baseUrl": ".",
+    "rootDirs": [
+      "app",
+      "client"
+    ],
     "paths": {
-      "@app*": [
-        "app/*"
+      "@/app/*": [
+        "./app/*"
       ],
-      "@client*": [
-        "client/*"
+      "@/client/*": [
+        "./client/*"
       ]
     }
   },
   "include": [
-    "src/**/*",
-    "src/*",
+    "app/**/*",
+    "app/*",
     "client/**/*",
     "client/*",
     "typings/**/*"

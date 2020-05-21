@@ -2,6 +2,6 @@
   "editor.tabSize": 2,
   "path-intellisense.extensionOnImport": true,
   "path-intellisense.autoSlashAfterDirectory": true,
-  "javascript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.importModuleSpecifier": "relative"
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
 }
