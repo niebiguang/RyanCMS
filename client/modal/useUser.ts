@@ -4,10 +4,14 @@ import services from '../services';
 import { message } from 'antd';
 import { UserStorage } from '../utils/user-storage';
 
-interface LoginDto { nickname: string, password: string, saved: boolean; }
+interface LoginDto {
+  nickname: string;
+  password: string;
+  saved: boolean;
+}
 
-export function useUser() {
-  const [user, setUser] = useImmerState<any | null>(null);
+export function useUser(initState: any) {
+  const [user, setUser] = useImmerState<any | null>(initState);
 
   // const login = useCallback(async ({ nickname, password, saved }: LoginDto) => {
 
@@ -29,12 +33,14 @@ export function useUser() {
   // }, [setUser]);
 
   const getUser = useCallback(async () => {
-    const userData = await services.user.visitor.getBaseUser({ nickname: 'Ryan' });
+    const userData = await services.user.visitor.getBaseUser({
+      nickname: 'Ryan',
+    });
     setUser(() => userData);
   }, [setUser]);
 
   return {
     user,
-    getUser
+    getUser,
   };
 }

@@ -14,21 +14,20 @@ import { staticDir } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 
 async function bootstrap() {
-
   if (isProduction()) {
-    awaitStaticReady()
+    awaitStaticReady();
   }
 
-  const app = await NestFactory.create(
-    AppModule,
-  );
+  const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new ExceptionFilter());
 
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-  app.use(ServerStatuc(staticDir, {
-    index: false,
-  }));
+  app.use(
+    ServerStatuc(staticDir, {
+      index: false,
+    }),
+  );
   await app.listen(8080, () => {
     console.log('服务器已开启: http:localhost:8080');
   });

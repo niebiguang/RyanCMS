@@ -10,6 +10,6 @@ export function isProduction() {
   return process.env.NODE_ENV === 'production';
 }
 
-export function depay(time: number) {
+export function delay(time: number) {
   return new Promise(resolve => setTimeout(resolve, time));
 }

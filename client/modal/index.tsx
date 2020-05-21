@@ -8,18 +8,23 @@ export const {
   useStore,
   useSelector,
   useImmerState,
-  getStore
+  getStore,
 } = createReactionStore(
   {
     loading: useLoading,
     user: useUser,
-
   },
-  {}
+  {},
 );
 
 export type StoreType = ReturnType<typeof useStore>;
 
-export function StoreProvider({ children }: { children: React.ReactNode }) {
-  return <Provider>{children}</Provider>;
+export function StoreProvider({
+  children,
+  initStore = {},
+}: {
+  children: React.ReactNode;
+  initStore: any;
+}) {
+  return <Provider initStore={initStore}>{children}</Provider>;
 }

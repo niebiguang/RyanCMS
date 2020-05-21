@@ -1,7 +1,9 @@
 import ReactDOMServer from 'react-dom/server';
 import fs from 'fs-extra';
 import axios from 'axios';
-import { isProduction, depay } from '../../util/util';
+import { isProduction, delay } from '../../util/util';
+import { PromiseList } from '@client/hooks/useSSRProps';
+import { router } from '@client/router';
 
 async function getHtmlTemplete() {
   let htmlTemplete = '';
@@ -23,10 +25,14 @@ async function getHtmlTemplete() {
 }
 
 export const renderFullPage = async (url: string, domain: string) => {
-  const { router } = require('@client/router');
-  let component = router(url);
-  if (!component) return null;
-  await depay(2000);
+  let initComponent = router(url);
+  if (!initComponent) return null;
+
+  PromiseList.clear();
+  ReactDOMServer.renderToStaticMarkup(initComponent);
+  const store = await PromiseList.getData();
+
+  const component = router(url, store);
   let html = ReactDOMServer.renderToString(component);
   if (!html) return null;
   const htmlTemplete = await getHtmlTemplete();

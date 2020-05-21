@@ -1,15 +1,39 @@
-import React from 'react';
-// import { useSelector } from '../../../modal';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useSSRProps, PromiseList } from '../../../hooks/useSSRProps';
+import { useSelector } from '../../../modal';
 
-export function Home() {
-  // const { getUser } = useSelector('user');
+export function HomeC() {
+  const { user } = useSelector('user');
+  const [count, setCount] = useState(0);
 
-  // useEffect(() => {
-  //   console.log('useEffect');
-  // }, []);
+  useSSRProps(() => {
+    return Promise.resolve({
+      user: {
+        name: '张三',
+        age: 19,
+      },
+    });
+  });
 
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-  return <div>home</div>;
+  useMemo(() => {
+    setCount(1);
+    setTimeout(() => {
+      setCount(5);
+    }, 0);
+  }, []);
+  return <div>home: {JSON.stringify(user)}</div>;
+}
+
+export class Home extends React.Component {
+  componentWillUpdate() {
+    console.log('dicomponentWillUpdatesd');
+  }
+
+  componentDidMount() {
+    console.log('did');
+  }
+
+  render() {
+    return <HomeC />;
+  }
 }
