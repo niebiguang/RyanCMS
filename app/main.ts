@@ -5,20 +5,20 @@ require('css-modules-require-hook')({
   processorOpts: { parser: lessParser.parse },
 });
 import { NestFactory } from '@nestjs/core';
-import ServerStatuc from 'serve-static';
+import ServerStatic from 'serve-static';
 import { AppModule } from './app.module';
 import { ExceptionFilter } from './common/filters/exception.filter';
 import bodyParser from 'body-parser';
-import { isProduction } from './util/util';
+import { isDevelopment } from './util/util';
 import { staticDir } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 import { watchClientReload } from '@/app/common/SSR/watchClientReload';
 
 async function bootstrap() {
-  if (isProduction()) {
-    awaitStaticReady();
-  } else {
+  if (isDevelopment()) {
     watchClientReload();
+  } else {
+    awaitStaticReady();
   }
 
   const app = await NestFactory.create(AppModule);
@@ -27,7 +27,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.use(
-    ServerStatuc(staticDir, {
+    ServerStatic(staticDir, {
       index: false,
     }),
   );

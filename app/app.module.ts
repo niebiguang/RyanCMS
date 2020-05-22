@@ -49,7 +49,9 @@ const ormConfig = {
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(WebpackMiddleware).forRoutes('');
+    if (isDevelopment()) {
+      consumer.apply(WebpackMiddleware).forRoutes('');
+    }
     consumer.apply(RenderMiddleware).forRoutes('');
     consumer.apply(UserAuthorizeMiddleware).forRoutes('');
   }
