@@ -27,6 +27,7 @@ axiosInstance.interceptors.response.use(
         data: {}
       };
     }
+    console.log('err', err);
     let errMsg = err.response.statusText;
     if (typeof err.response.data.message === 'string') {
       errMsg = err.response.data.message;

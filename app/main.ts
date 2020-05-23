@@ -1,3 +1,4 @@
+///<reference path="../typings/global.d.ts"/>
 import lessParser from 'postcss-less';
 require('css-modules-require-hook')({
   generateScopedName: '[path][name]__[local]',
@@ -10,7 +11,7 @@ import { AppModule } from './app.module';
 import { ExceptionFilter } from './common/filters/exception.filter';
 import bodyParser from 'body-parser';
 import { isDevelopment } from './util/util';
-import { staticDir } from './common/constant/path';
+import { staticDir, SERVER_PORT } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 import { watchClientReload } from '@/app/common/SSR/watchClientReload';
 
@@ -32,7 +33,7 @@ async function bootstrap() {
     }),
   );
   await app.listen(8080, () => {
-    console.log('服务器已开启: http:localhost:8080');
+    console.log(`服务器已开启: http://localhost:${SERVER_PORT}`);
   });
 }
 

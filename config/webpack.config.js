@@ -314,11 +314,7 @@ module.exports = function (webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
-        '@ant-design/icons/lib/dist': path.resolve(
-          __dirname,
-          '../src/config/icons.ts',
-        ),
-        '@': path.resolve(__dirname, '../src'),
+        '@/client': path.resolve(__dirname, '../client'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

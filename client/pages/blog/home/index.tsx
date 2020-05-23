@@ -1,19 +1,29 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSSRProps, PromiseList } from '../../../hooks/useSSRProps';
-import { useSelector } from '../../../modal';
+import { useSelector } from 'react-redux';
+import services from '../../../services';
 
 export function Home() {
-  const { user } = useSelector('user');
-  const [count, setCount] = useState(0);
 
-  useSSRProps(() => {
-    return Promise.resolve({
-      user: {
-        name: '李四',
-        age: 19,
-      },
-    });
+  const state = useSelector<any>((state) => state) as any;
+
+  const getUser = useCallback(async () => {
+    try {
+      const userData = await services.user.visitor.getBaseUser({
+        domain: state.config.acceptHost,
+      });
+      return userData;
+    } catch (error) {
+      console.log('error', error);
+    }
+
+  }, [state]);
+
+
+  useSSRProps(async () => {
+    const user = await getUser();
+    return Promise.resolve({ user });
   });
 
-  return <div>名字：{user && user.name}</div>;
+  return <div>{JSON.stringify(state)}</div>;
 }

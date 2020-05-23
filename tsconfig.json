@@ -23,7 +23,8 @@
     "baseUrl": ".",
     "rootDirs": [
       "app",
-      "client"
+      "client",
+      "typings"
     ],
     "paths": {
       "@/app/*": [

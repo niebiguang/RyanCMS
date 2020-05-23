@@ -1,7 +1,8 @@
 import { useMemo, useRef } from 'react';
+import { isServer } from '@/client/utils/tools';
 
 export type PromiseHandler<
-  T extends any = { [key: string]: any }
+  T extends any = { [key: string]: any; }
   > = () => Promise<T>;
 export class PromiseList {
   static list: PromiseHandler[] = [];
@@ -26,8 +27,11 @@ export class PromiseList {
 
 export function useSSRProps(handler: PromiseHandler) {
   const ref = useRef(false);
-  if (!ref.current) {
-    PromiseList.addPromise(handler);
-    ref.current = true;
+  if (isServer()) {
+    if (!ref.current) {
+      PromiseList.addPromise(handler);
+      ref.current = true;
+    }
   }
+
 }

@@ -10,6 +10,10 @@ export function isProduction() {
   return process.env.NODE_ENV === 'production';
 }
 
+export function isServer() {
+  return process.env.SSR_ENV === 'server';
+}
+
 export function delay(time: number) {
   return new Promise(resolve => setTimeout(resolve, time));
 }
