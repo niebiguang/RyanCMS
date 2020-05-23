@@ -1,6 +1,4 @@
-///<reference path="../typings/postcss-less.d.ts"/>
-///<reference path="../typings/global.d.ts"/>
-import lessParser from 'postcss-less';
+const lessParser = require('postcss-less');
 import cssModulesHook from 'css-modules-require-hook';
 cssModulesHook({
   generateScopedName: '[path][name]__[local]',

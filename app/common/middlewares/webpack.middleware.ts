@@ -10,7 +10,7 @@ const compiler = webpack(config);
 export class WebpackMiddleware implements NestMiddleware {
   private webpackDev = webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    logLevel: 'warn',
+    // logLevel: 'warn',
     index: false,
     headers: {
       'Cache-Control': 'no-cache',

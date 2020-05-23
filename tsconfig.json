@@ -34,7 +34,7 @@
   "include": [
     "app",
     "client",
-    "typings"
+    "typing"
   ],
   "exclude": [
     "node_modules",
