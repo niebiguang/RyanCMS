@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSSRProps, PromiseList } from '../../../hooks/useSSRProps';
-import { useSelector } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
 import services from '../../../services';
+import styles from './index.module.scss';
 
 export function Home() {
 
@@ -25,5 +26,5 @@ export function Home() {
     return Promise.resolve({ user });
   });
 
-  return <div>{JSON.stringify(state)}</div>;
+  return <div className={styles.red}>{JSON.stringify(state)}</div>;
 }

@@ -6,8 +6,8 @@ export function clearModuleCache(module: string) {
   const mod = require.cache[require.resolve(module)];
   if (mod) {
     delete require.cache[require.resolve(module)];
-    mod.children.forEach((m => {
+    mod.children.forEach(((m: { id: string; }) => {
       clearModuleCache(require.resolve(m.id));
-    }))
+    }));
   }
 }

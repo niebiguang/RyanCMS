@@ -6,8 +6,6 @@ dist
 ormconfig.json
 init_state.js
 
-/backend/public/upload/*
-
 # misc
 .DS_Store
 .env.local

@@ -43,10 +43,5 @@
     "one-line": false,
     "one-variable-per-declaration": false
   },
-  "rulesDirectory": [],
-  "linterOptions": {
-    "exclude": [
-      "src/**/*.json"
-    ]
-  }
+  "rulesDirectory": []
 }

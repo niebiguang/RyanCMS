@@ -1,7 +1,12 @@
-import { createStore, combineReducers } from 'redux';
-import { createReducer } from './createReducer';
+import { createStore, combineReducers, PreloadedState } from 'redux';
+import { user } from './user';
+import { config } from './config';
+
 const rootReducer = combineReducers({
-  user: createReducer(null, 'SET_USER'),
-  config: createReducer({}, 'SET_CONFIG'),
+  user,
+  config,
 });
-export const getStore = (initStore: any) => createStore(rootReducer, initStore);
+
+export type AppState = ReturnType<typeof rootReducer>;
+
+export const getStore = (initStore: Partial<AppState>) => createStore(rootReducer, initStore);

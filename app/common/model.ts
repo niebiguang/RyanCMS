@@ -15,7 +15,7 @@ export abstract class Model {
   /**
    * 内置验证器
    */
-  validators(): { [index: string]: Validator } {
+  validators(): { [index: string]: Validator; } {
     return {
       string: new StringValidator(),
       number: new NumberValidator(),
@@ -34,13 +34,13 @@ export abstract class Model {
    */
   abstract rules(): ValidateRule[] | any[] | CallbackValidateRule[];
 
-  abstract attributeLabels(): { [attr: string]: string };
+  abstract attributeLabels(): { [attr: string]: string; };
 
   /**
    * 设置属性
    * @param data
    */
-  setAttributes(data: any) {
+  setAttributes(data: { [key: string]: any; }) {
     if (!_.isObject(data)) {
       throw new UserError('参数不能为空');
     }

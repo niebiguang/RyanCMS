@@ -9,4 +9,4 @@ export const router = routerWarp(
     <Route exact path='/' component={Home} />
     <Route exact path="/hello" component={Hello} />
   </Switch>
-)
+);

@@ -8,11 +8,12 @@
     "jsx": "react",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "declaration": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node",
     "removeComments": true,
     "noLib": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
@@ -21,26 +22,19 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",
-    "rootDirs": [
-      "app",
-      "client",
-      "typings"
-    ],
     "paths": {
       "@/app/*": [
         "./app/*"
       ],
       "@/client/*": [
         "./client/*"
-      ]
-    }
+      ],
+    },
   },
   "include": [
-    "app/**/*",
-    "app/*",
-    "client/**/*",
-    "client/*",
-    "typings/**/*"
+    "app",
+    "client",
+    "typings"
   ],
   "exclude": [
     "node_modules",

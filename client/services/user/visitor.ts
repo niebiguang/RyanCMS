@@ -1,4 +1,5 @@
 import { request } from "../axios.config";
+import { User, Resume } from '@/client/modal/user.interface';
 
 export const visitor = {
   register(
@@ -8,28 +9,25 @@ export const visitor = {
   ): Promise<any> {
     return request.post('/user/visitor/register', { nickname, phone, password });
   },
-  login(phone: string, password: string): Promise<any> {
+  login(phone: string, password: string): Promise<User> {
     return request.post('/user/visitor/login', {
       phone,
       password,
     });
   },
-  getDomainList(): Promise<any[]> {
-    return request.get('/domain-list');
-  },
   getBaseUser(params: {
     nickname?: string;
     domain?: string;
-  }): Promise<any> {
+  }): Promise<User> {
     return request.get('/user/visitor/base_info', {
       params,
     });
   },
-  getResume(userId: number): Promise<any> {
+  getResume(userId: number): Promise<Resume> {
     return request.get('/user/visitor/resume', {
       params: {
         user_id: userId,
       },
     });
   }
-}
+};

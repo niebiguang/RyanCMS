@@ -1,6 +1,8 @@
+///<reference path="../typings/postcss-less.d.ts"/>
 ///<reference path="../typings/global.d.ts"/>
 import lessParser from 'postcss-less';
-require('css-modules-require-hook')({
+import cssModulesHook from 'css-modules-require-hook';
+cssModulesHook({
   generateScopedName: '[path][name]__[local]',
   extensions: ['.css', '.less', '.scss'],
   processorOpts: { parser: lessParser.parse },
@@ -14,6 +16,7 @@ import { isDevelopment } from './util/util';
 import { staticDir, SERVER_PORT } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 import { watchClientReload } from '@/app/common/SSR/watchClientReload';
+
 
 async function bootstrap() {
   if (isDevelopment()) {
