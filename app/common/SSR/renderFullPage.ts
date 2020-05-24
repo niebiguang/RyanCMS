@@ -1,8 +1,12 @@
+import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { Request, Response, NextFunction } from 'express';
+import _ from 'lodash';
 import fs from 'fs-extra';
 import axios from 'axios';
 import { isProduction, isServer } from '../../util/util';
 import { SERVER_PORT } from '../constant/path';
+import { matchPath } from 'react-router-dom';
 
 async function getHtmlTemplete() {
   let htmlTemplete = '';
@@ -23,31 +27,45 @@ async function getHtmlTemplete() {
   })();
 }
 
-export const renderFullPage = async (url: string, acceptHost: string) => {
+export const renderFullPage = async (req: Request, res: Response, next: NextFunction) => {
+  const { routesMap } = await import('@/client/router');
+
+  // 判断有没有匹配的路由
+  if (!_.flatMap(Object.values(routesMap)).some(route => matchPath(req.path, route))) {
+    return null;
+  }
+
+  const url = req.url;
   const { router } = await import('@/client/router');
   const { PromiseList } = await import('@/client/hooks/useSSRProps');
   const { axiosInstance } = await import('@/client/services/axios.config');
+
   axiosInstance.defaults.baseURL = `http://localhost:${SERVER_PORT}`;
   const initStore = {
     config: {
-      acceptHost
+      acceptHost: 'www.maocanhua.cn'
     }
   };
-  let initComponent = router(url, initStore);
-  if (!initComponent) return null;
+
+  // 收集依赖数据
+  const initComponent = router(url, {
+    initStore,
+  });
   PromiseList.clear();
   ReactDOMServer.renderToStaticMarkup(initComponent);
+
   const store = await PromiseList.getData();
-  const component = router(url, store);
-  let html = ReactDOMServer.renderToString(component);
-  if (!html) return null;
+  const component = router(url, {
+    initStore: store
+  });
+  const renderContent = ReactDOMServer.renderToString(component);
   const htmlTemplete = await getHtmlTemplete();
 
   // 初始化props文件
   const initStoreJS = `<script>window.__INITIAL_STATE__ = ${JSON.stringify(store)}</script>`;
   const renderHtml = htmlTemplete.replace(
     /(\<div\s+id\="root"\>)(.|\n|\r)*(\<\/div\>)/i,
-    '$1' + html + '$3' + initStoreJS,
+    '$1' + renderContent + '$3' + initStoreJS,
   );
   return renderHtml;
 };

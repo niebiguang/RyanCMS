@@ -6,6 +6,7 @@
       "dom"
     ],
     "jsx": "react",
+    "strictNullChecks": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noImplicitAny": true,

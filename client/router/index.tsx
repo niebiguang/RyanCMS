@@ -5,10 +5,28 @@ import { routerWarp } from './routerWarp';
 import { Home } from '../pages/blog/home';
 import { BlogLayout } from '../layouts/blog';
 
+export const routesMap = {
+  blog: [
+    {
+      path: "/",
+      component: Home,
+      exact: true
+    }
+  ]
+};
+
 export const router = routerWarp(
-  <BlogLayout>
-    <Switch>
-      <Route exact path='/' component={Home} />
-    </Switch>
-  </BlogLayout>
+  <Switch>
+    {/* <Route exact path="/login" component={Login} /> */}
+    <BlogLayout>
+      <Switch>
+        {
+          routesMap.blog.map(route => (
+            <Route key={route.path} {...route} />
+          ))
+        }
+      </Switch>
+    </BlogLayout>
+  </Switch>
+
 );

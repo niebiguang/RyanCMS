@@ -9,14 +9,10 @@ export function Home() {
   const state = useSelector<any>((state) => state) as any;
 
   const getUser = useCallback(async () => {
-    try {
-      const userData = await services.user.visitor.getBaseUser({
-        domain: state.config.acceptHost,
-      });
-      return userData;
-    } catch (error) {
-      console.log('error', error);
-    }
+    const userData = await services.user.visitor.getBaseUser({
+      domain: state.config.acceptHost,
+    });
+    return userData;
 
   }, [state]);
 

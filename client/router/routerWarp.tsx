@@ -3,14 +3,20 @@ import { StaticRouter, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { getStore, AppState } from '../reducers';
 
+interface IOptions {
+  initStore: Partial<AppState>;
+}
+
 export function routerWarp(children: React.ReactNode) {
-  return (url?: string, initStore?: Partial<AppState>) => {
-    const store = getStore(initStore);
+  return (url?: string, options?: IOptions) => {
+    const store = getStore(options ? options.initStore : {});
     if (url) {
       return (
-        <StaticRouter context={{}} location={url}>
-          <Provider store={store}>{children}</Provider>
-        </StaticRouter>
+        <Provider store={store}>
+          <StaticRouter context={{}} location={url}>
+            {children}
+          </StaticRouter>
+        </Provider>
       );
     } else {
       const preloadedState = global.window.__INITIAL_STATE__ || {}; //
