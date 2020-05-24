@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/client/components/Link';
 import {
   HomeOutlined,
   TagOutlined,
@@ -24,11 +24,48 @@ export function Header() {
   const { blogger } = useBlogger();
   const { user } = useUser();
 
-  if (!blogger) return null;
-
   const isOwner = useMemo(() => {
     return blogger && user && blogger.user_id === user.user_id;
   }, [blogger, user]);
+
+  const memu = useMemo(() => {
+    return (
+      <>
+        <li className={styles['menu-link']}>
+          <Link to={'/'}>
+            <HomeOutlined />
+            <WhiteSpace />
+										主页
+              </Link>
+        </li>
+        <li className={styles['menu-link']}>
+          <Link to={'/record'}>
+            <BarsOutlined />
+            <WhiteSpace />	归档
+          </Link>
+
+        </li>
+        <li className={styles['menu-link']}>
+          <Link to={'/tag'}>
+            <TagOutlined />
+            <WhiteSpace />
+										标签
+              </Link>
+
+        </li>
+        <li className={styles['menu-link']}>
+          <Link to={'/about'}>
+            <RobotOutlined />
+            <WhiteSpace />
+										关于
+              </Link>
+
+        </li>
+      </>
+    );
+  }, []);
+
+  if (!blogger) return null;
 
   return (
     <div>
@@ -40,37 +77,7 @@ export function Header() {
           </div>
           <h1>{blogger.nickname}的博客</h1>
           <ul className={styles['pc_nav']}>
-            <li className={styles['menu-link']}>
-              <Link to={'/'}>
-                <HomeOutlined />
-                <WhiteSpace />
-										主页
-              </Link>
-            </li>
-            <li className={styles['menu-link']}>
-              <Link to={'/record'}>
-                <BarsOutlined />
-                <WhiteSpace />
-										归档
-              </Link>
-
-            </li>
-            <li className={styles['menu-link']}>
-              <Link to={'/tag'}>
-                <TagOutlined />
-                <WhiteSpace />
-										标签
-              </Link>
-
-            </li>
-            <li className={styles['menu-link']}>
-              <Link to={'/about'}>
-                <RobotOutlined />
-                <WhiteSpace />
-										关于
-              </Link>
-
-            </li>
+            {memu}
           </ul>
           <div className={styles['concat']}>
             <ul className={styles['concat-wrap']}>
@@ -142,26 +149,7 @@ export function Header() {
             maxHeight: collapsed ? 0 : '500px'
           }}
         >
-          <li className={styles['menu-link']}>
-            <Link to="">
-              <HomeOutlined /><WhiteSpace />主页
-            </Link>
-          </li>
-          <li className={styles['menu-link']}>
-            <Link to="">
-              <HomeOutlined /><WhiteSpace />归档
-            </Link>
-          </li>
-          <li className={styles['menu-link']}>
-            <Link to="">
-              <HomeOutlined /><WhiteSpace />标签
-            </Link>
-          </li>
-          <li className={styles['menu-link']}>
-            <Link to="">
-              <HomeOutlined /><WhiteSpace />关于
-            </Link>
-          </li>
+          {memu}
         </ul>
       </div>
     </div>

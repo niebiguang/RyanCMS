@@ -348,16 +348,18 @@ module.exports = function (webpackEnv) {
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
         {
-          test: /\.(js|jsx|ts|tsx|mjs)$/,
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
           use: [
             {
               options: {
+                cache: true,
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
-                plugins: ['react-hot-loader/babel', 'react-hot-loader/webpack'],
+                resolvePluginsRelativeTo: __dirname,
+                fix: true,
               },
-              loader: require.resolve('source-map-loader'),
+              loader: require.resolve('eslint-loader'),
             },
           ],
           include: paths.appSrc,

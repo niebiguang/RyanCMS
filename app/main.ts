@@ -6,6 +6,7 @@ cssModulesHook({
   processorOpts: { parser: lessParser.parse },
 });
 import { NestFactory } from '@nestjs/core';
+import { JSDOM } from 'jsdom';
 import ServerStatic from 'serve-static';
 import { AppModule } from './app.module';
 import { ExceptionFilter } from './common/filters/exception.filter';
@@ -14,7 +15,10 @@ import { isDevelopment } from './util/util';
 import { staticDir, SERVER_PORT } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 import { watchClientReload } from '@/app/common/SSR/watchClientReload';
-
+const jsdom = new JSDOM().window;
+global.window = jsdom.window;
+global.document = jsdom.window.document;
+global.navigator = jsdom.window.navigator;
 
 async function bootstrap() {
   if (isDevelopment()) {

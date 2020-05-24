@@ -14,7 +14,22 @@ export const routesMap = {
       path: "/",
       component: Home,
       exact: true
-    }
+    },
+    {
+      path: "/:user",
+      component: Home,
+      exact: true
+    },
+    {
+      path: "/:user/a/:article",
+      component: Home,
+      exact: true
+    },
+    {
+      path: "/:user/t/:tag",
+      component: Home,
+      exact: true
+    },
   ]
 };
 
