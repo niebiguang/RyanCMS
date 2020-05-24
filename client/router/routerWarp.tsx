@@ -19,7 +19,7 @@ export function routerWarp(children: React.ReactNode) {
         </Provider>
       );
     } else {
-      const preloadedState = global.window.__INITIAL_STATE__ || {}; //
+      const preloadedState = window.__INITIAL_STATE__ || {}; //
       return (
         <BrowserRouter>
           <Provider store={getStore(preloadedState)}>{children}</Provider>

@@ -1,9 +1,7 @@
-import { useSelector } from 'react-redux';
-import { AppState } from '../reducers';
-import { User } from '../modal/user.interface';
+import { useAppSelector } from './useAppSelector';
 
 export function useUser() {
-  const user = useSelector<AppState, User>(state => state.user);
+  const user = useAppSelector('user');
 
   return {
     user

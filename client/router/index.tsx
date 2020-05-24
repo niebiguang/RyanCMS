@@ -4,6 +4,9 @@ import { Switch, Route } from 'react-router-dom';
 import { routerWarp } from './routerWarp';
 import { Home } from '../pages/blog/home';
 import { BlogLayout } from '../layouts/blog';
+import '@/client/assets/style/responsive.css';
+import '@/client/assets/style/reset.scss';
+import '@/client/assets/style/public.scss';
 
 export const routesMap = {
   blog: [

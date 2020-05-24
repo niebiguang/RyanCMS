@@ -1,15 +1,34 @@
-import React from 'react';
-import { useBlogger } from '@/client/selector/useBlogger';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   HomeOutlined,
-
+  TagOutlined,
+  RobotOutlined,
+  BarsOutlined,
+  MailOutlined,
+  ZhihuOutlined,
+  WeiboOutlined,
+  GithubOutlined,
+  MehOutlined,
+  SmileOutlined,
+  CloseOutlined
 } from '@ant-design/icons';
+import { useUser } from '@/client/selector/useUser';
+import { useBlogger } from '@/client/selector/useBlogger';
 import styles from './index.module.scss';
+import { WhiteSpace } from '@/client/components/whiteSpace';
 
 export function Header() {
+  const [collapsed, setCollapsed] = useState(false);
 
   const { blogger } = useBlogger();
+  const { user } = useUser();
+
+  if (!blogger) return null;
+
+  const isOwner = useMemo(() => {
+    return blogger && user && blogger.user_id === user.user_id;
+  }, [blogger, user]);
 
   return (
     <div>
@@ -22,77 +41,98 @@ export function Header() {
           <h1>{blogger.nickname}的博客</h1>
           <ul className={styles['pc_nav']}>
             <li className={styles['menu-link']}>
-              <Link to={''}>
+              <Link to={'/'}>
                 <HomeOutlined />
-										&nbsp;
+                <WhiteSpace />
 										主页
               </Link>
             </li>
+            <li className={styles['menu-link']}>
+              <Link to={'/record'}>
+                <BarsOutlined />
+                <WhiteSpace />
+										归档
+              </Link>
+
+            </li>
+            <li className={styles['menu-link']}>
+              <Link to={'/tag'}>
+                <TagOutlined />
+                <WhiteSpace />
+										标签
+              </Link>
+
+            </li>
+            <li className={styles['menu-link']}>
+              <Link to={'/about'}>
+                <RobotOutlined />
+                <WhiteSpace />
+										关于
+              </Link>
+
+            </li>
           </ul>
           <div className={styles['concat']}>
-            {/* <ul className={styles['concat-wrap']}>
+            <ul className={styles['concat-wrap']}>
               {blogger.concat.email && (
                 <li className={styles['menu-link']}>
                   <a target="_blank" href={blogger.concat.email}>
-                    <Icon type={'mail'} />
-											&nbsp; 邮箱
+                    <MailOutlined />
+                    <WhiteSpace /> 邮箱
 										</a>
                 </li>
               )}
               {blogger.concat.github && (
                 <li className={styles['menu-link']}>
                   <a target="_blank" href={blogger.concat.github}>
-                    <Icon type={'github'} />
-											&nbsp; github
+                    <GithubOutlined />
+                    <WhiteSpace /> github
 										</a>
                 </li>
               )}
               {blogger.concat.zhihu && (
                 <li className={styles['menu-link']}>
                   <a target="_blank" href={blogger.concat.zhihu}>
-                    <Icon type={'zhihu'} />
-											&nbsp; 知乎
+                    <ZhihuOutlined />
+                    <WhiteSpace /> 知乎
 										</a>
                 </li>
               )}
               {blogger.concat.weibo && (
                 <li className={styles['menu-link']}>
                   <a target="_blank" href={blogger.concat.weibo}>
-                    <Icon type={'weibo'} />
-											&nbsp; 微博
+                    <WeiboOutlined />
+                    <WhiteSpace /> 微博
 										</a>
                 </li>
               )}
-            </ul> */}
+            </ul>
           </div>
-          {/* <div className={styles['footer']}>
-            {user ? (
+          <div className={styles['footer']}>
+            {isOwner ? (
               <Link to="/admin">
-                <Icon type={'meh'} /> 后台管理
+                <MehOutlined /><WhiteSpace />后台管理
               </Link>
             ) : (
                 <Link to="/login">
-                  <Icon type={'smile'} /> 马上登陆
+                  <SmileOutlined /><WhiteSpace />马上登陆
                 </Link>
               )}
-          </div> */}
+          </div>
         </div>
       </div>
-      {/* <div className={styles['mb_header'] + ' hidden-md hidden-lg'}>
+      <div className={styles['mb_header'] + ' hidden-md hidden-lg'}>
         <div
           className={styles['mb_menu_btn']}
-          onClick={() =>
-            this.setState({
-              collapsed: !collapsed
-            })}
+          onClick={() => setCollapsed(!collapsed)}
         >
           {collapsed ? (
             <span>
-              <Icon type="bars" />
+              <BarsOutlined />
             </span>
           ) : (
               <span>
-                <Icon type="close" />
+                <CloseOutlined />
               </span>
             )}
         </div>
@@ -102,19 +142,28 @@ export function Header() {
             maxHeight: collapsed ? 0 : '500px'
           }}
         >
-          {blogRoutes.filter((item) => !!item.icon).map((item) => (
-            <li key={item.path} className={styles['menu-link']}>
-              <Link to={prefixPath.replace(':id', blogger.nickname) + item.path}>
-                <span>
-                  <Icon type={item!.icon} />
-										&nbsp;
-										{item.name}
-                </span>
-              </Link>
-            </li>
-          ))}
+          <li className={styles['menu-link']}>
+            <Link to="">
+              <HomeOutlined /><WhiteSpace />主页
+            </Link>
+          </li>
+          <li className={styles['menu-link']}>
+            <Link to="">
+              <HomeOutlined /><WhiteSpace />归档
+            </Link>
+          </li>
+          <li className={styles['menu-link']}>
+            <Link to="">
+              <HomeOutlined /><WhiteSpace />标签
+            </Link>
+          </li>
+          <li className={styles['menu-link']}>
+            <Link to="">
+              <HomeOutlined /><WhiteSpace />关于
+            </Link>
+          </li>
         </ul>
-      </div> */}
+      </div>
     </div>
   );
 }

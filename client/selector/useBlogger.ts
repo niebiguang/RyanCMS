@@ -1,9 +1,7 @@
-import { useSelector } from 'react-redux';
-import { AppState } from '../reducers';
-import { User } from '../modal/user.interface';
+import { useAppSelector } from './useAppSelector';
 
 export function useBlogger() {
-  const blogger = useSelector<AppState, User>(state => state.user);
+  const blogger = useAppSelector('blogger');
 
   return {
     blogger
