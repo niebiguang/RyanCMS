@@ -18,8 +18,8 @@ export function Home() {
 
 
   useSSRProps(async () => {
-    const user = await getUser();
-    return Promise.resolve({ user });
+    const blogger = await getUser();
+    return Promise.resolve({ blogger });
   });
 
   return <div className={styles.red}>{JSON.stringify(state)}</div>;
