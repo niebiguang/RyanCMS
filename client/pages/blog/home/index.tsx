@@ -1,24 +1,18 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useSSRProps, PromiseList } from '../../../hooks/useSSRProps';
-import { useSelector, useStore } from 'react-redux';
-import services from '../../../services';
-import styles from './index.module.scss';
+import React from 'react';
+import { useSSRProps } from '../../../hooks/useSSRProps';
+import { useAppSelector } from '@/client/selector/useAppSelector';
+import { useUser } from '@/client/selector/useUser';
+const styles = require('./index.module.scss');
 
 export function Home() {
 
-  const state = useSelector<any>((state) => state) as any;
-
-  const getUser = useCallback(async () => {
-    const userData = await services.user.visitor.getBaseUser({
-      domain: state.config.acceptHost,
-    });
-    return userData;
-
-  }, [state.config.acceptHost]);
-
+  const config = useAppSelector('config');
+  const { getUser } = useUser();
 
   useSSRProps(async () => {
-    const blogger = await getUser();
+    const blogger = await getUser({
+      domain: config.acceptHost
+    });
     return Promise.resolve({ blogger });
   });
 
