@@ -7,6 +7,7 @@ import axios from 'axios';
 import { isProduction, isServer } from '../../util/util';
 import { SERVER_PORT } from '../constant/path';
 import { matchPath } from 'react-router-dom';
+React.useLayoutEffect = React.useEffect;
 
 async function getHtmlTemplete() {
   let htmlTemplete = '';

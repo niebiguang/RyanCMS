@@ -1,4 +1,4 @@
-const lessParser = require('postcss-less');
+import lessParser from 'postcss-less';
 import cssModulesHook from 'css-modules-require-hook';
 cssModulesHook({
   generateScopedName: '[path][name]__[local]',
@@ -16,7 +16,7 @@ import { staticDir, SERVER_PORT } from './common/constant/path';
 import { awaitStaticReady } from './common/SSR/awaitStaticReady';
 import { watchClientReload } from '@/app/common/SSR/watchClientReload';
 const jsdom = new JSDOM().window;
-global.window = jsdom.window;
+global.window = jsdom.window as any;
 global.document = jsdom.window.document;
 global.navigator = jsdom.window.navigator;
 

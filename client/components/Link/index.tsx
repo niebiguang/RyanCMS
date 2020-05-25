@@ -10,7 +10,7 @@ export function Link(props: LinkProps) {
     if (!blogger) return props.to;
     const isAcceptDomain = blogger.domain === window.location.hostname;
     return isAcceptDomain ? props.to : `/${blogger.nickname}${props.to}`.replace(/\/$/, '');
-  }, [props, blogger]);
+  }, [blogger, props.to]);
 
   return <ReactLink {...props} to={formatPath} />;
 }

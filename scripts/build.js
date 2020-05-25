@@ -16,10 +16,9 @@ require('../config/env');
 
 
 const path = require('path');
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const bfj = require('bfj');
 const configFactory = require('../config/webpack.config');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
@@ -27,7 +26,6 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const { copyPublicFolder } = require('./copyPublicFolder');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -45,18 +43,12 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
   process.exit(1);
 }
 
-// Process CLI arguments
-const argv = process.argv.slice(2);
-const writeStatsJson = argv.indexOf('--stats') !== -1;
-
 // Generate configuration
 const config = configFactory('production');
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
-const {
-  checkBrowsers
-} = require('react-dev-utils/browsersHelper');
+const { checkBrowsers } = require('react-dev-utils/browsersHelper');
 checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     // First, read the current file sizes in build directory.
@@ -73,23 +65,19 @@ checkBrowsers(paths.appPath, isInteractive)
     return build(previousFileSizes);
   })
   .then(
-    ({
-      stats,
-      previousFileSizes,
-      warnings
-    }) => {
+    ({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
         console.log(chalk.yellow('Compiled with warnings.\n'));
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-          chalk.underline(chalk.yellow('keywords')) +
-          ' to learn more about each warning.'
+            chalk.underline(chalk.yellow('keywords')) +
+            ' to learn more about each warning.'
         );
         console.log(
           'To ignore, add ' +
-          chalk.cyan('// eslint-disable-next-line') +
-          ' to the line before.\n'
+            chalk.cyan('// eslint-disable-next-line') +
+            ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -106,7 +94,7 @@ checkBrowsers(paths.appPath, isInteractive)
       console.log();
 
       const appPackage = require(paths.appPackageJson);
-      const publicUrl = paths.publicUrl;
+      const publicUrl = paths.publicUrlOrPath;
       const publicPath = config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
       printHostingInstructions(
@@ -118,9 +106,19 @@ checkBrowsers(paths.appPath, isInteractive)
       );
     },
     err => {
-      console.log(chalk.red('Failed to compile.\n'));
-      printBuildError(err);
-      process.exit(1);
+      const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
+      if (tscCompileOnError) {
+        console.log(
+          chalk.yellow(
+            'Compiled with the following type errors (you may want to check these before deploying your app):\n'
+          )
+        );
+        printBuildError(err);
+      } else {
+        console.log(chalk.red('Failed to compile.\n'));
+        printBuildError(err);
+        process.exit(1);
+      }
     }
   )
   .catch(err => {
@@ -132,9 +130,21 @@ checkBrowsers(paths.appPath, isInteractive)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
+  // We used to support resolving modules according to `NODE_PATH`.
+  // This now has been deprecated in favor of jsconfig/tsconfig.json
+  // This lets you use absolute paths in imports inside large monorepos:
+  if (process.env.NODE_PATH) {
+    console.log(
+      chalk.yellow(
+        'Setting NODE_PATH to resolve modules absolutely has been deprecated in favor of setting baseUrl in jsconfig.json (or tsconfig.json if you are using TypeScript) and will be removed in a future major release of create-react-app.'
+      )
+    );
+    console.log();
+  }
+
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack(config);
+  const compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;
@@ -142,17 +152,23 @@ function build(previousFileSizes) {
         if (!err.message) {
           return reject(err);
         }
+
+        let errMessage = err.message;
+
+        // Add additional information for postcss errors
+        if (Object.prototype.hasOwnProperty.call(err, 'postcssNode')) {
+          errMessage +=
+            '\nCompileError: Begins at CSS selector ' +
+            err['postcssNode'].selector;
+        }
+
         messages = formatWebpackMessages({
-          errors: [err.message],
+          errors: [errMessage],
           warnings: [],
         });
       } else {
         messages = formatWebpackMessages(
-          stats.toJson({
-            all: false,
-            warnings: true,
-            errors: true
-          })
+          stats.toJson({ all: false, warnings: true, errors: true })
         );
       }
       if (messages.errors.length) {
@@ -172,26 +188,24 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-            'Most CI servers set it automatically.\n'
+              'Most CI servers set it automatically.\n'
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));
       }
 
-      const resolveArgs = {
+      return resolve({
         stats,
         previousFileSizes,
         warnings: messages.warnings,
-      };
-      if (writeStatsJson) {
-        return bfj
-          .write(paths.appBuild + '/bundle-stats.json', stats.toJson())
-          .then(() => resolve(resolveArgs))
-          .catch(error => reject(new Error(error)));
-      }
-
-      return resolve(resolveArgs);
+      });
     });
   });
 }
 
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
+    dereference: true,
+    filter: file => file !== paths.appHtml,
+  });
+}

@@ -14,7 +14,7 @@ export function Home() {
     });
     return userData;
 
-  }, [state]);
+  }, [state.config.acceptHost]);
 
 
   useSSRProps(async () => {
@@ -22,5 +22,5 @@ export function Home() {
     return Promise.resolve({ blogger });
   });
 
-  return <div className={styles.red}>{JSON.stringify(state)}</div>;
+  return <div className={styles.red}>22222222222</div>;
 }
