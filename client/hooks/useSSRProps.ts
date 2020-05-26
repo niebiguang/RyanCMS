@@ -1,9 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { isServer } from '@/client/utils/tools';
 
-export type PromiseHandler<
-  T extends any = { [key: string]: any; }
-  > = () => Promise<T>;
+export type PromiseHandler = () => Promise<void>;
 export class PromiseList {
   static list: PromiseHandler[] = [];
 
@@ -15,13 +13,8 @@ export class PromiseList {
     this.list = [];
   }
 
-  static async getData() {
-    const data = (
-      await Promise.all(this.list.map(handler => handler()))
-    ).reduce((a, b) => {
-      return { ...a, ...b };
-    }, {});
-    return data;
+  static async awaitPromiseList() {
+    await Promise.all(this.list.map(handler => handler()));
   }
 }
 

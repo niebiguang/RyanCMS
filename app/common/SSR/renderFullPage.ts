@@ -40,30 +40,31 @@ export const renderFullPage = async (req: Request, res: Response, next: NextFunc
   const { router } = await import('@/client/router');
   const { PromiseList } = await import('@/client/hooks/useSSRProps');
   const { axiosInstance } = await import('@/client/services/axios.config');
+  const { getStore } = await import('@/client/modal/index');
 
   axiosInstance.defaults.baseURL = `http://localhost:${SERVER_PORT}`;
-  const initStore = {
+
+  const store = getStore({
     config: {
       acceptHost: 'www.maocanhua.cn'
     }
-  };
-
+  });
   // 收集依赖数据
   const initComponent = router(url, {
-    initStore,
+    store,
   });
   PromiseList.clear();
   ReactDOMServer.renderToStaticMarkup(initComponent);
 
-  const store = await PromiseList.getData();
+  await PromiseList.awaitPromiseList();
   const component = router(url, {
-    initStore: store
+    store
   });
   const renderContent = ReactDOMServer.renderToString(component);
   const htmlTemplete = await getHtmlTemplete();
 
   // 初始化props文件
-  const initStoreJS = `<script>window.__INITIAL_STATE__ = ${JSON.stringify(store)}</script>`;
+  const initStoreJS = `<script>window.__INITIAL_STATE__ = ${JSON.stringify(store.getState())}</script>`;
   const renderHtml = htmlTemplete.replace(
     /(\<div\s+id\="root"\>)(.|\n|\r)*(\<\/div\>)/i,
     '$1' + renderContent + '$3' + initStoreJS,

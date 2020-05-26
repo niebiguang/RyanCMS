@@ -1,5 +1,5 @@
 import { request } from "../axios.config";
-import { User, Resume } from '@/client/modal/user.interface';
+import { User, Resume } from '@/client/types/user.interface';
 
 export const visitor = {
   register(

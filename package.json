@@ -176,7 +176,7 @@
     "tsconfig-paths": "^3.5.0",
     "tsify": "^4.0.1",
     "typeorm": "^0.2.8",
-    "typescript": "~3.7.2",
+    "typescript": "^3.9.3",
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "2.3.0",
     "webpack": "4.41.5",

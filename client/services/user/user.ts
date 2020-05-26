@@ -1,6 +1,6 @@
 import { request } from '../axios.config';
-import { User, Resume } from '@/client/modal/user.interface';
-import { SuccessResponse } from '@/client/modal/response/success.response';
+import { User, Resume } from '@/client/types/user.interface';
+import { SuccessResponse } from '@/client/types/response/success.response';
 
 export const user = {
   update(data: Partial<User>): Promise<User> {

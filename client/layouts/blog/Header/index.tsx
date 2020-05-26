@@ -35,7 +35,7 @@ export function Header() {
           <Link to={'/'}>
             <HomeOutlined />
             <WhiteSpace />
-										主页
+            主页
               </Link>
         </li>
         <li className={styles['menu-link']}>
@@ -49,7 +49,7 @@ export function Header() {
           <Link to={'/tag'}>
             <TagOutlined />
             <WhiteSpace />
-										标签
+            标签
               </Link>
 
         </li>
@@ -57,7 +57,7 @@ export function Header() {
           <Link to={'/about'}>
             <RobotOutlined />
             <WhiteSpace />
-										关于
+            关于
               </Link>
 
         </li>

@@ -1,18 +1,18 @@
 import React from 'react';
 import { StaticRouter, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { getStore, AppState } from '../reducers';
+import { getStore, AppState } from '../modal';
+import { Store } from 'redux';
 
 interface IOptions {
-  initStore: Partial<AppState>;
+  store: Store<AppState>;
 }
 
 export function routerWarp(children: React.ReactNode) {
   return (url?: string, options?: IOptions) => {
-    const store = getStore(options ? options.initStore : {});
     if (url) {
       return (
-        <Provider store={store}>
+        <Provider store={options!.store}>
           <StaticRouter context={{}} location={url}>
             {children}
           </StaticRouter>
